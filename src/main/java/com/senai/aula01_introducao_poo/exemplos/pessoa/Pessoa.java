@@ -23,19 +23,19 @@ public class Pessoa {
 
     // Métodos
     public void falar(String frase) {
-        System.out.println(this.nome + " disse: " + frase);
+        System.out.println(nome + " disse: " + frase);
     }
 
     public void comer(String alimento) {
-        System.out.println(this.nome + " comeu " + alimento + ".");
+        System.out.println(nome + " comeu " + alimento + ".");
     }
 
     // toString: converte os dados para texto
     @Override // Indica que o método em questão é deste objeto, e não do raíz (chamado Object)
     public String toString() {
-        return "Nome da pessoa: " + this.nome + "\n" +
-                "Idade: " + this.idade + "\n" +
-                "Altura: " + this.altura + "\n" +
-                "Endereço:\n" + this.endereco + "\n" ;
+        return "Nome da pessoa: " + nome + "\n" +
+                "Idade: " + idade + "\n" +
+                "Altura: " + altura + "\n" +
+                "Endereço:\n" + endereco + "\n" ;
     }
 }
