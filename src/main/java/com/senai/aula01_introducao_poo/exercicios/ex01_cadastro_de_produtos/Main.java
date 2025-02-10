@@ -60,39 +60,58 @@ public class Main {
                         System.out.println("Quantidade do produto no estoque: ");
                         dadosProduto[2] = scanner.nextLine();
 
-                        novaMatrizProdutos[i] = new Produto(dadosProduto[0],Float.parseFloat(dadosProduto[1]),Integer.parseInt(dadosProduto[2]));
+                        novaMatrizProdutos[i] = new Produto(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
 
                         System.out.println("______________________________\n");
                     }
 
                     matrizProdutos = novaMatrizProdutos;
+
+                    System.out.println("Novos estoques registrados com sucesso.");
+                    for (int i = 0; i < matrizProdutos.length; i++) {
+                        System.out.println(matrizProdutos[i]);
+                    }
                     break;
+
                 case 2:
-                    System.out.println("""
+                    System.out.print("""
                             ╔════════════════════════════════════════════════════════════════════╗
                             ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
                             ╠════════════════════════════════════════════════════════════════════╣
                             ║        Selecione um produto para visualizar as informações:        ║
                             ║                                                                    ║
                             """);
-                    /*║1  ║Nome                                                       ║
-                    ║2  ║Nome                                                       ║
-                    ║3  ║Nome                                                       ║*/
+                    for (int i = 0; i < matrizProdutos.length; i++) {
+                        System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
+                        for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+                            System.out.print(" ");
+                        }
+                        System.out.println("║");
+                    }
                     System.out.println("""
                             ╠════════════════════════════════════════════════════════════════════╣
                             ║                  © Lopes Supermercados, 2025                       ║
                             ╚════════════════════════════════════════════════════════════════════╝                    
                             """);
+
+                    int
+
                     break;
                 case 3:
                     System.out.println("""
                             ╔════════════════════════════════════════════════════════════════════╗
                             ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
                             ╠════════════════════════════════════════════════════════════════════╣
+                            ║          Selecione um produto para atualizar as quantidade:        ║
+                            ║                                                                    ║
                             """);
-                    /*║1  ║Nome                                                       ║
-                    ║2  ║Nome                                                       ║
-                    ║3  ║Nome                                                       ║*/
+                    for (int i = 0; i < matrizProdutos.length; i++) {
+                        System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
+                        for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+                            System.out.print(" ");
+                        }
+                        System.out.println("║");
+                    }
                     System.out.println("""
                             ╠════════════════════════════════════════════════════════════════════╣
                             ║                  © Lopes Supermercados, 2025                       ║
