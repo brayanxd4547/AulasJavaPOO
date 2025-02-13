@@ -1,4 +1,4 @@
-package com.senai.aula01_introducao_poo.exercicios.ex01_cadastro_de_produtos;
+/*ackage com.senai.aula01_introducao_poo.exercicios.ex01_cadastro_de_produtos;
 
 import java.util.Scanner;
 
@@ -126,7 +126,7 @@ public class Main {
                             """);
                     /*║1  ║Nome   ║R$340, 00                                        ║
                     ║2  ║Nome   ║R$340, 00                                        ║
-                    ║3  ║Nome   ║R$340, 00                                        ║*/
+                    ║3  ║Nome   ║R$340, 00                                        ║
                     System.out.println("""
                             ╠════════════════════════════════════════════════════════════════════╣
                             ║                  © Lopes Supermercados, 2025                       ║
@@ -145,4 +145,4 @@ public class Main {
             }
         } while (true);
     }
-}
+}*/
