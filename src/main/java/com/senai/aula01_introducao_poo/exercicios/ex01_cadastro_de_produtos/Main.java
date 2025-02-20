@@ -43,6 +43,12 @@ public class Main {
                     break;
 
                 case 5:
+                    removerEstoque();
+                    System.out.println("Digite qualquer tecla para continuar...");
+                    scanner.nextLine();
+                    break;
+
+                case 6:
                     encerrePrograma();
                     break;
             }
@@ -60,7 +66,8 @@ public class Main {
                 ║  2  ║   Exibir informações de um produto                           ║
                 ║  3  ║   Atualizar o estoque de um produto                          ║
                 ║  4  ║   Calcular o valor total do estoque de um produto            ║
-                ║  5  ║   Sair                                                       ║
+                ║  5  ║   Remover um estoque                                         ║
+                ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                  © Lopes Supermercados, 2025                       ║
                 ╚════════════════════════════════════════════════════════════════════╝
@@ -196,6 +203,45 @@ public class Main {
                 ║                  © Lopes Supermercados, 2025                       ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
+    }
+
+    public static void removerEstoque() {
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                    REMOVER UM ESTOQUE DE PRODUTOS                  ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║               Selecione um estoque para ser removido:              ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        for (int i = 0; i < matrizProdutos.length; i++) {
+            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
+            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
+        }
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                  © Lopes Supermercados, 2025                       ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
+
+        produtoSelecionado = scanner.nextInt() - 1;
+        scanner.nextLine();
+        Produto[] novaMatrizProdutos = new Produto[matrizProdutos.length - 1];
+
+        for (int i = 0; i < novaMatrizProdutos.length; i++) {
+            if (produtoSelecionado != i){
+                novaMatrizProdutos[i] = matrizProdutos[i];
+            }
+        }
+
+        matrizProdutos = novaMatrizProdutos;
+
+        System.out.println("Estoque removido com sucesso!\n");
+        for (Produto produto : matrizProdutos) {
+            System.out.println(produto);
+        }
     }
 
     public static void encerrePrograma() {
