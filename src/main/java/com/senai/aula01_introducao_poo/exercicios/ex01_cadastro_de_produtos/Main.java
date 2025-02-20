@@ -11,8 +11,6 @@ public class Main {
     static Produto[] matrizProdutos = new Produto[0];
     static int produtoSelecionado;
 
-    static String[] atributosProduto = {"nome", "preço", "quantidade"};
-
     public static void main(String[] args) {
         do {
             mostrarMenu();
