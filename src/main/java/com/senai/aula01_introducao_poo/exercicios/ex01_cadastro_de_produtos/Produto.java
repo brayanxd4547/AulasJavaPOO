@@ -18,9 +18,8 @@ public class Produto {
         System.out.println();
     }
 
-    public void calcularValorEstoque(){
-        System.out.printf("O valor total do estoque de " + nome + " é igual a R$%,.2f", (quantidade * preco));
-        System.out.println();
+    public float calcularValorEstoque(){
+        return quantidade * preco;
     }
 
     @Override

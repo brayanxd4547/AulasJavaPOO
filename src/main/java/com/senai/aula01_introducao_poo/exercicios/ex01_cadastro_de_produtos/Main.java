@@ -88,7 +88,7 @@ public class Main {
             novaMatrizProdutos[i] = matrizProdutos[i];
         }
 
-        for (int i = matrizProdutos.length; i < qtdNovosProdutos; i++) {
+        for (int i = matrizProdutos.length; i < novaMatrizProdutos.length; i++) {
             String[] dadosProduto = new String[3];
 
             System.out.println("Nome do produto: ");
@@ -168,7 +168,7 @@ public class Main {
         do {
             System.out.println("Você deseja acrescentar ou remover uma quantidade do estoque? (A para acrescentar / R para remover)");
             input = scanner.nextLine();
-        } while(!(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("r")));
+        } while (!(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("r")));
 
         boolean escolha = input.equalsIgnoreCase("a");
 
@@ -183,18 +183,13 @@ public class Main {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║         TABELA DOS VALORES TOTAIS DOS ESTOQUES DOS PRODUTOS        ║
-                ╠════════════════════════════════════════════════════════════════════╣
+                ╚════════════════════════════════════════════════════════════════════╝
                 """);
         for (int i = 0; i < matrizProdutos.length; i++) {
-            float valorTotal = matrizProdutos[i].preco * matrizProdutos[i].quantidade;
-            System.out.printf("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome + ": R$%,.2f", valorTotal);
-            for (int j = 0; j < 53 - (matrizProdutos[i].nome.length() + String.valueOf(valorTotal).length()); j++) {
-                System.out.print(" ");
-            }
-            System.out.println("║");
+            System.out.printf("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome + ": R$%,.2f\n", matrizProdutos[i].calcularValorEstoque());
         }
         System.out.println("""
-                ╠════════════════════════════════════════════════════════════════════╣
+                ╔════════════════════════════════════════════════════════════════════╗
                 ║                  © Lopes Supermercados, 2025                       ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
