@@ -8,38 +8,50 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static Aluno[] matrizProdutos = new Aluno[0];
-    static int produtoSelecionado;
+    static Aluno[] matrizAlunos = {
+            new Aluno("Roberto Fonseca", 10, 8.3f),
+            new Aluno("Carlos Drummond", 15, 6.2f),
+            new Aluno("Inácio Pereira", 17, 9)
+    };
+    static int alunoSelecionado;
+
+    //todo BORA TRABALHAR
 
     public static void main(String[] args) {
         do {
             mostrarMenu();
             switch (opcao) {
                 case 1:
-                    crieNovoEstoque();
+                    registreNovoAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 2:
-                    exibaEstoque();
+                    exibirInformacoesDeAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 3:
-                    atualizeEstoque();
+                    atualizeAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 4:
-                    calculeValoresTotais();
+                    verifiqueAprovacaoDeAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 5:
+                    apagueAluno();
+                    System.out.println("Digite qualquer tecla para continuar...");
+                    scanner.nextLine();
+                    break;
+
+                case 6:
                     encerrePrograma();
                     break;
             }
@@ -66,7 +78,7 @@ public class Main {
         scanner.nextLine();
     }
 
-    public static void crieNovoEstoque() {
+    public static void registreNovoAluno() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                 CRIAR NOVOS ESTOQUES DE PRODUTOS                   ║
@@ -82,13 +94,13 @@ public class Main {
 
         int qtdNovosProdutos = scanner.nextInt();
         scanner.nextLine();
-        Aluno[] novaMatrizProdutos = new Aluno[qtdNovosProdutos + matrizProdutos.length];
+        Aluno[] novaMatrizProdutos = new Aluno[qtdNovosProdutos + matrizAlunos.length];
 
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            novaMatrizProdutos[i] = matrizProdutos[i];
+        for (int i = 0; i < matrizAlunos.length; i++) {
+            novaMatrizProdutos[i] = matrizAlunos[i];
         }
 
-        for (int i = matrizProdutos.length; i < novaMatrizProdutos.length; i++) {
+        for (int i = matrizAlunos.length; i < novaMatrizProdutos.length; i++) {
             String[] dadosProduto = new String[3];
 
             System.out.println("Nome do produto: ");
@@ -105,15 +117,15 @@ public class Main {
             System.out.println("______________________________\n");
         }
 
-        matrizProdutos = novaMatrizProdutos;
+        matrizAlunos = novaMatrizProdutos;
 
         System.out.println("Novos estoques registrados com sucesso!\n");
-        for (Aluno produto : matrizProdutos) {
+        for (Aluno produto : matrizAlunos) {
             System.out.println(produto);
         }
     }
 
-    public static void exibaEstoque() {
+    public static void exibirInformacoesDeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
@@ -121,9 +133,9 @@ public class Main {
                 ║        Selecione um produto para visualizar as informações:        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        for (int i = 0; i < matrizAlunos.length; i++) {
+            System.out.print("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome);
+            for (int j = 0; j < 59 - matrizAlunos[i].nome.length(); j++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -134,13 +146,13 @@ public class Main {
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        alunoSelecionado = scanner.nextInt() - 1;
         scanner.nextLine();
 
-        System.out.println(matrizProdutos[produtoSelecionado]);
+        System.out.println(matrizAlunos[alunoSelecionado]);
     }
 
-    public static void atualizeEstoque() {
+    public static void atualizeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
@@ -148,9 +160,9 @@ public class Main {
                 ║          Selecione um produto para atualizar as quantidade:        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        for (int i = 0; i < matrizAlunos.length; i++) {
+            System.out.print("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome);
+            for (int j = 0; j < 59 - matrizAlunos[i].nome.length(); j++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -161,7 +173,7 @@ public class Main {
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        alunoSelecionado = scanner.nextInt() - 1;
         scanner.nextLine();
 
         String input;
@@ -173,26 +185,30 @@ public class Main {
         boolean escolha = input.equalsIgnoreCase("a");
 
         System.out.println("Quantos produtos você deseja " + (escolha ? "acrescentar " : "remover ") + "do estoque?");
-        matrizProdutos[produtoSelecionado].atualizaEstoque(escolha, scanner.nextInt());
+        matrizAlunos[alunoSelecionado].atualizaEstoque(escolha, scanner.nextInt());
         scanner.nextLine();
 
-        System.out.println(matrizProdutos[produtoSelecionado]);
+        System.out.println(matrizAlunos[alunoSelecionado]);
     }
 
-    public static void calculeValoresTotais() {
+    public static void verifiqueAprovacaoDeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║         TABELA DOS VALORES TOTAIS DOS ESTOQUES DOS PRODUTOS        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.printf("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome + ": R$%,.2f\n", matrizProdutos[i].calcularValorEstoque());
+        for (int i = 0; i < matrizAlunos.length; i++) {
+            System.out.printf("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome + ": R$%,.2f\n", matrizAlunos[i].calcularValorEstoque());
         }
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                  © Lopes Supermercados, 2025                       ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
+    }
+
+    public static void apagueAluno() {
+
     }
 
     public static void encerrePrograma() {
