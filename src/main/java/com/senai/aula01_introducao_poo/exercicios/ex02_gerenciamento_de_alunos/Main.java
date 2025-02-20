@@ -1,4 +1,4 @@
-package com.senai.aula01_introducao_poo.exercicios.ex01_cadastro_de_produtos;
+package com.senai.aula01_introducao_poo.exercicios.ex02_gerenciamento_de_alunos;
 
 import java.util.Scanner;
 
@@ -8,10 +8,7 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static Produto[] matrizProdutos = {
-            new Produto("Macarrão", 15f, 1200),
-            new Produto("Sopa de tomate", 10f, 1400),
-    };
+    static Aluno[] matrizProdutos = new Aluno[0];
     static int produtoSelecionado;
 
     public static void main(String[] args) {
@@ -85,7 +82,7 @@ public class Main {
 
         int qtdNovosProdutos = scanner.nextInt();
         scanner.nextLine();
-        Produto[] novaMatrizProdutos = new Produto[qtdNovosProdutos + matrizProdutos.length];
+        Aluno[] novaMatrizProdutos = new Aluno[qtdNovosProdutos + matrizProdutos.length];
 
         for (int i = 0; i < matrizProdutos.length; i++) {
             novaMatrizProdutos[i] = matrizProdutos[i];
@@ -103,7 +100,7 @@ public class Main {
             System.out.println("Quantidade do produto no estoque: ");
             dadosProduto[2] = scanner.nextLine();
 
-            novaMatrizProdutos[i] = new Produto(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
+            novaMatrizProdutos[i] = new Aluno(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
 
             System.out.println("______________________________\n");
         }
@@ -111,7 +108,7 @@ public class Main {
         matrizProdutos = novaMatrizProdutos;
 
         System.out.println("Novos estoques registrados com sucesso!\n");
-        for (Produto produto : matrizProdutos) {
+        for (Aluno produto : matrizProdutos) {
             System.out.println(produto);
         }
     }
