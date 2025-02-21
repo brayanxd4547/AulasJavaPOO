@@ -230,9 +230,11 @@ public class Main {
         scanner.nextLine();
         Produto[] novaMatrizProdutos = new Produto[matrizProdutos.length - 1];
 
-        for (int i = 0; i < novaMatrizProdutos.length; i++) {
-            if (produtoSelecionado != i){
-                novaMatrizProdutos[i] = matrizProdutos[i];
+        int i = 0;
+        for (int j = 0; j < matrizProdutos.length; j++) {
+            if (produtoSelecionado != j){
+                novaMatrizProdutos[i] = matrizProdutos[j];
+                i++;
             }
         }
 

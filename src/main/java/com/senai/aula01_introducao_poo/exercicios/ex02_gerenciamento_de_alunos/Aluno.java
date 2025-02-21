@@ -17,12 +17,12 @@ public class Aluno {
                "Nota: " + this.nota + '\n';
     }
 
-    public static void atualizaNota(){
-
+    public void atualizaNota(float novaNota){
+        this.nota = novaNota;
     }
 
-    public static boolean verificarAprovacao(float nota){
-        return nota >= 6;
+    public boolean verificarAprovacao(){
+        return this.nota >= 6;
     }
 
     @Override
@@ -31,8 +31,4 @@ public class Aluno {
                "Idade: " + idade + '\n' +
                "Nota: " + nota + '\n';
     }
-
-
-
-
 }

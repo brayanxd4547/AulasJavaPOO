@@ -40,13 +40,13 @@ public class Main {
                     break;
 
                 case 4:
-                    verifiqueAprovacaoDeAluno();
+                    apagueAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 5:
-                    apagueAluno();
+                    verifiqueAprovacaoDeAluno();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
@@ -65,13 +65,14 @@ public class Main {
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  Selecione uma opção:                                              ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║  1  ║   Criar novos estoques de produtos                           ║
-                ║  2  ║   Exibir informações de um produto                           ║
-                ║  3  ║   Atualizar o estoque de um produto                          ║
-                ║  4  ║   Calcular o valor total do estoque de um produto            ║
-                ║  5  ║   Sair                                                       ║
+                ║  1  ║   Registrar novos alunos                                     ║
+                ║  2  ║   Exibir informações de um aluno                             ║
+                ║  3  ║   Atualizar a nota de um produto                             ║
+                ║  4  ║   Apagar o registro de um aluno                              ║
+                ║  5  ║   Verificar aprovação de aluno                               ║
+                ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                © Colégio Espaço Potencial, 2025                    ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
         opcao = scanner.nextInt();
@@ -81,56 +82,56 @@ public class Main {
     public static void registreNovoAluno() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                 CRIAR NOVOS ESTOQUES DE PRODUTOS                   ║
+                ║                 CRIAR NOVOS REGISTRO DE UM ALUNO                   ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║     Insira a quantidade de novos estoques que deseja registrar     ║
-                ║     e os dados do estoque do produto a ser criado.                 ║
+                ║     Insira a quantidade de aluos que deseja registrar e os         ║
+                ║     seus dados.                                                    ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                © Colégio Espaço Potencial, 2025                    ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        int qtdNovosProdutos = scanner.nextInt();
+        int qtdNovosAlunos = scanner.nextInt();
         scanner.nextLine();
-        Aluno[] novaMatrizProdutos = new Aluno[qtdNovosProdutos + matrizAlunos.length];
+        Aluno[] novaMatrizAlunos = new Aluno[qtdNovosAlunos + matrizAlunos.length];
 
         for (int i = 0; i < matrizAlunos.length; i++) {
-            novaMatrizProdutos[i] = matrizAlunos[i];
+            novaMatrizAlunos[i] = matrizAlunos[i];
         }
 
-        for (int i = matrizAlunos.length; i < novaMatrizProdutos.length; i++) {
-            String[] dadosProduto = new String[3];
+        for (int i = matrizAlunos.length; i < novaMatrizAlunos.length; i++) {
+            String[] dadosAluno = new String[3];
 
-            System.out.println("Nome do produto: ");
-            dadosProduto[0] = scanner.nextLine();
+            System.out.println("Nome do aluno: ");
+            dadosAluno[0] = scanner.nextLine();
 
-            System.out.println("Preço do produto em reais: ");
-            dadosProduto[1] = scanner.nextLine();
+            System.out.println("Idade do aluno: ");
+            dadosAluno[1] = scanner.nextLine();
 
-            System.out.println("Quantidade do produto no estoque: ");
-            dadosProduto[2] = scanner.nextLine();
+            System.out.println("Nota do aluno: ");
+            dadosAluno[2] = scanner.nextLine();
 
-            novaMatrizProdutos[i] = new Aluno(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
+            novaMatrizAlunos[i] = new Aluno(dadosAluno[0], Integer.parseInt(dadosAluno[1]), Float.parseFloat(dadosAluno[2]));
 
             System.out.println("______________________________\n");
         }
 
-        matrizAlunos = novaMatrizProdutos;
+        matrizAlunos = novaMatrizAlunos;
 
-        System.out.println("Novos estoques registrados com sucesso!\n");
-        for (Aluno produto : matrizAlunos) {
-            System.out.println(produto);
+        System.out.println("Novos alunos registrados com sucesso!\n");
+        for (Aluno aluno : matrizAlunos) {
+            System.out.println(aluno);
         }
     }
 
     public static void exibirInformacoesDeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
+                ║                 EXIBIR INFORMAÇÕES DE UM ALUNO                     ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║        Selecione um produto para visualizar as informações:        ║
+                ║         Selecione um aluno para visualizar as informações:         ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
         for (int i = 0; i < matrizAlunos.length; i++) {
@@ -142,7 +143,7 @@ public class Main {
         }
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                © Colégio Espaço Potencial, 2025                    ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -157,7 +158,7 @@ public class Main {
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║          Selecione um produto para atualizar as quantidade:        ║
+                ║             Selecione um aluno para atualizar as nota:             ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
         for (int i = 0; i < matrizAlunos.length; i++) {
@@ -169,23 +170,15 @@ public class Main {
         }
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                © Colégio Espaço Potencial, 2025                    ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
         alunoSelecionado = scanner.nextInt() - 1;
         scanner.nextLine();
 
-        String input;
-        do {
-            System.out.println("Você deseja acrescentar ou remover uma quantidade do estoque? (A para acrescentar / R para remover)");
-            input = scanner.nextLine();
-        } while (!(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("r")));
-
-        boolean escolha = input.equalsIgnoreCase("a");
-
-        System.out.println("Quantos produtos você deseja " + (escolha ? "acrescentar " : "remover ") + "do estoque?");
-        matrizAlunos[alunoSelecionado].atualizaEstoque(escolha, scanner.nextInt());
+        System.out.println("Insira a nova nota para " + matrizAlunos[alunoSelecionado].nome + ": ");
+        matrizAlunos[alunoSelecionado].atualizaNota(scanner.nextInt());
         scanner.nextLine();
 
         System.out.println(matrizAlunos[alunoSelecionado]);
@@ -194,21 +187,69 @@ public class Main {
     public static void verifiqueAprovacaoDeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║         TABELA DOS VALORES TOTAIS DOS ESTOQUES DOS PRODUTOS        ║
-                ╚════════════════════════════════════════════════════════════════════╝
+                ║           VERIFIQUE APROVAÇÃO DE ALUNO POR NOTA AVALIATIVA         ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║             Selecione um aluno para verificar aprovação:           ║
+                ╠════════════════════════════════════════════════════════════════════╣
                 """);
         for (int i = 0; i < matrizAlunos.length; i++) {
-            System.out.printf("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome + ": R$%,.2f\n", matrizAlunos[i].calcularValorEstoque());
+            System.out.print("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome);
+            for (int j = 0; j < 59 - matrizAlunos[i].nome.length(); j++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
         }
         System.out.println("""
-                ╔════════════════════════════════════════════════════════════════════╗
-                ║                  © Lopes Supermercados, 2025                       ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                © Colégio Espaço Potencial, 2025                    ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
+
+        alunoSelecionado = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        System.out.println("O aluno " + (!matrizAlunos[alunoSelecionado].verificarAprovacao() ? "não " : "") + "está aprovado.");
     }
 
     public static void apagueAluno() {
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                    REMOVER UM REGISTRO DE ALUNO                    ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║               Selecione um aluno para ser removido:                ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        for (int i = 0; i < matrizAlunos.length; i++) {
+            System.out.print("║  " + (i + 1) + "  ║   " + matrizAlunos[i].nome);
+            for (int j = 0; j < 59 - matrizAlunos[i].nome.length(); j++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
+        }
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                © Colégio Espaço Potencial, 2025                    ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
 
+        alunoSelecionado = scanner.nextInt() - 1;
+        scanner.nextLine();
+        Aluno[] novaMatrizAlunos = new Aluno[matrizAlunos.length - 1];
+
+        int i = 0;
+        for (int j = 0; j < matrizAlunos.length; j++) {
+            if (alunoSelecionado != j){
+                novaMatrizAlunos[i] = matrizAlunos[j];
+                i++;
+            }
+        }
+
+        matrizAlunos = novaMatrizAlunos;
+
+        System.out.println("Registro removido com sucesso!\n");
+        for (Aluno aluno : matrizAlunos) {
+            System.out.println(aluno);
+        }
     }
 
     public static void encerrePrograma() {
