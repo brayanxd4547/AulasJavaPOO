@@ -2,18 +2,22 @@ package com.senai.aula03_encapsulamento.exercicios.ex03_gerenciamento_de_funcion
 
 public class Main {
     public static void main(String[] args) {
-        Funcionario funcionario00 = new Funcionario("Umberto Jr.", 10000);
+        Funcionario funcionario00 = new Funcionario("Zé Roberto", 10000, "gerente");
 
-        System.out.println("Titular da conta bancária: " + funcionario00.getNome());
-        System.out.printf("Saldo da conta bancária: R$%,.2f\n",  funcionario00.getSalario());
+        System.out.println("Nome do funcionário: " + funcionario00.getNome());
+        System.out.printf("Salário: R$%,.2f\n",  funcionario00.getSalario());
+        System.out.println("Cargo: " + funcionario00.getCargo());
+        System.out.println();
 
-        funcionario00.setNome("Doisberto Jr.");
-        funcionario00.setSalario(20000);
+        funcionario00.setNome("Menusumberto");
+        funcionario00.setSalario(5000);
+        funcionario00.setCargo("programador");
 
-        System.out.println("Titular da conta bancária: " + funcionario00.getNome());
-        System.out.printf("Saldo da conta bancária: R$%,.2f\n",  funcionario00.getSalario());
+        System.out.println("Nome do funcionário: " + funcionario00.getNome());
+        System.out.printf("Salário: R$%,.2f\n",  funcionario00.getSalario());
+        System.out.println("Cargo: " + funcionario00.getCargo());
+        System.out.println();
 
-        funcionario00.aumentarPercentual(1000);
-        funcionario00.sacar(5000);
+        funcionario00.aumentarPercentual(50);
     }
 }

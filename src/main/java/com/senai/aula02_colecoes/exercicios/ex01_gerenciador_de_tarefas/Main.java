@@ -1,5 +1,6 @@
-package com.senai.aula01_introducao_poo.exercicios.ex01_cadastro_de_produtos;
+package com.senai.aula02_colecoes.exercicios.ex01_gerenciador_de_tarefas;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,47 +9,38 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static Produto[] matrizProdutos = {
-            new Produto("Macarrão", 15f, 1200),
-            new Produto("Sopa de tomate", 10f, 1400),
-    };
-    static int produtoSelecionado;
+    static ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+    static int qtdTarefasSelecionadas;
 
     public static void main(String[] args) {
         do {
             mostrarMenu();
             switch (opcao) {
                 case 1:
-                    crieNovoEstoque();
+                    adicionarTarefa();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 2:
-                    exibaEstoque();
+                    listarTarefas();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 3:
-                    atualizeEstoque();
+                    marcarTarefaConcluida();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 4:
-                    calculeValoresTotais();
+                    removerTarefa();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 5:
-                    removerEstoque();
-                    System.out.println("Digite qualquer tecla para continuar...");
-                    scanner.nextLine();
-                    break;
-
-                case 6:
                     encerrePrograma();
                     break;
             }
@@ -58,189 +50,141 @@ public class Main {
     public static void mostrarMenu() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                               MENU                                 ║
+                ║                      GERENCIADOR DE TAREFAS                        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  Selecione uma opção:                                              ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║  1  ║   Criar novos estoques de produtos                           ║
-                ║  2  ║   Exibir informações de um produto                           ║
-                ║  3  ║   Atualizar o estoque de um produto                          ║
-                ║  4  ║   Calcular o valor total do estoque de um produto            ║
-                ║  5  ║   Remover um estoque                                         ║
-                ║  6  ║   Sair                                                       ║
+                ║  1  ║   Adicionar novas tarefas                                    ║
+                ║  2  ║   Listar tarefas                                             ║
+                ║  3  ║   Marcar tarefa como concluída/inconcluída                   ║
+                ║  4  ║   Remover tarefas                                            ║
+                ║  5  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                        © Task Manager, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
         opcao = scanner.nextInt();
         scanner.nextLine();
     }
 
-    public static void crieNovoEstoque() {
+    public static void adicionarTarefa() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                 CRIAR NOVOS ESTOQUES DE PRODUTOS                   ║
+                ║                      ADICIONAR NOVAS TAREFAS                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║     Insira a quantidade de novos estoques que deseja registrar     ║
-                ║     e os dados do estoque do produto a ser criado.                 ║
+                ║     Insira a quantidade de tarefas que deseja adicionar e as       ║
+                ║     tarefas a serem adicionadas.                                   ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                        © Task Manager, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        int qtdNovosProdutos = scanner.nextInt();
+        System.out.print("Quantidade de novas tarefas: ");
+        qtdTarefasSelecionadas = scanner.nextInt();
         scanner.nextLine();
-        Produto[] novaMatrizProdutos = new Produto[qtdNovosProdutos + matrizProdutos.length];
-
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            novaMatrizProdutos[i] = matrizProdutos[i];
+        for (int i = 0; i < qtdTarefasSelecionadas; i++) {
+            System.out.print("Insira a tarefa " + (i + 1) + ": ");
+            listaTarefas.add(new Tarefa(scanner.nextLine(), false));
         }
 
-        for (int i = matrizProdutos.length; i < novaMatrizProdutos.length; i++) {
-            String[] dadosProduto = new String[3];
-
-            System.out.print("Nome do produto: ");
-            dadosProduto[0] = scanner.nextLine();
-
-            System.out.print("Preço do produto em reais: ");
-            dadosProduto[1] = scanner.nextLine();
-
-            System.out.print("Quantidade do produto no estoque: ");
-            dadosProduto[2] = scanner.nextLine();
-
-            novaMatrizProdutos[i] = new Produto(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
-
-            System.out.println("______________________________\n");
-        }
-
-        matrizProdutos = novaMatrizProdutos;
-
-        System.out.println("Novos estoques registrados com sucesso!\n");
+        System.out.println("\nTarefas adicionadas!");
     }
 
-    public static void exibaEstoque() {
+    public static void listarTarefas() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
+                ║                           LISTAR TAREFAS                           ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║        Selecione um produto para visualizar as informações:        ║
+                ║         Segue a lista de todas as tarefas e sua conclusão.         ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaTarefas.forEach(tarefa -> {
+            System.out.print("║  " + (listaTarefas.indexOf(tarefa) + 1) + "  ║  " + tarefa);
+            for (int i = 0; i < 69 - ("║  " + listaTarefas.indexOf(tarefa) + "  ║  " + tarefa).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                        © Task Manager, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
-
-        produtoSelecionado = scanner.nextInt() - 1;
-        scanner.nextLine();
-
-        matrizProdutos[produtoSelecionado].exibirDetalhes();
     }
 
-    public static void atualizeEstoque() {
+    public static void marcarTarefaConcluida() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
+                ║            MARCAR TAREFAS COMO CONCLUÍDAS/INCONCLUÍDAS             ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║          Selecione um produto para atualizar as quantidade:        ║
+                ║          Selecione uma ou mais tarefas para marcar como            ║
+                ║          concluídas ou inconcluídas.                               ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaTarefas.forEach(tarefa -> {
+            System.out.print("║  " + (listaTarefas.indexOf(tarefa) + 1) + "  ║  " + tarefa.nome + " | Concluída? " + (tarefa.concluido ? "Sim" : "Não"));
+            for (int i = 0; i < 69 - ("║  " + listaTarefas.indexOf(tarefa) + "  ║  " + tarefa.nome + " | Concluída? " + (tarefa.concluido ? "Sim" : "Não")).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                        © Task Manager, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        System.out.print("Quantidade de tarefas a terem sua conclusão alterada: ");
+        qtdTarefasSelecionadas = scanner.nextInt();
         scanner.nextLine();
-
-        String input;
-        do {
-            System.out.println("Você deseja acrescentar ou remover uma quantidade do estoque? (A para acrescentar / R para remover)");
-            input = scanner.nextLine();
-        } while (!(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("r")));
-
-        boolean escolha = input.equalsIgnoreCase("a");
-
-        System.out.println("Quantos produtos você deseja " + (escolha ? "acrescentar " : "remover ") + "do estoque?");
-        matrizProdutos[produtoSelecionado].atualizaEstoque(escolha, scanner.nextInt());
-        scanner.nextLine();
-
-        System.out.println(matrizProdutos[produtoSelecionado]);
-    }
-
-    public static void calculeValoresTotais() {
-        System.out.print("""
-                ╔════════════════════════════════════════════════════════════════════╗
-                ║         TABELA DOS VALORES TOTAIS DOS ESTOQUES DOS PRODUTOS        ║
-                ╚════════════════════════════════════════════════════════════════════╝
-                """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.printf("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome + ": R$%,.2f\n", matrizProdutos[i].calcularValorEstoque());
+        for (int i = 0; i < qtdTarefasSelecionadas; i++) {
+            System.out.print("(" + (i + 1) + ") Índice da tarefa na lista: ");
+            int indice = scanner.nextInt() - 1;
+            scanner.nextLine();
+            listaTarefas.get(indice).concluido = !listaTarefas.get(indice).concluido;
         }
-        System.out.println("""
-                ╔════════════════════════════════════════════════════════════════════╗
-                ║                  © Lopes Supermercados, 2025                       ║
-                ╚════════════════════════════════════════════════════════════════════╝
-                """);
+
+        System.out.println("\nTarefas alteradas!");
     }
 
-    public static void removerEstoque() {
+    public static void removerTarefa() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                    REMOVER UM ESTOQUE DE PRODUTOS                  ║
+                ║                          REMOVER TAREFAS                           ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║               Selecione um estoque para ser removido:              ║
+                ║         Selecione uma ou mais tarefas para serem removidas.        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaTarefas.forEach(tarefa -> {
+            System.out.print("║  " + (listaTarefas.indexOf(tarefa) + 1) + "  ║  " + tarefa.nome);
+            for (int i = 0; i < 69 - ("║  " + listaTarefas.indexOf(tarefa) + "  ║  " + tarefa.nome).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                        © Task Manager, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        System.out.print("Quantidade de tarefas a serem removidas: ");
+        qtdTarefasSelecionadas = scanner.nextInt();
         scanner.nextLine();
-        Produto[] novaMatrizProdutos = new Produto[matrizProdutos.length - 1];
 
-        int i = 0;
-        for (int j = 0; j < matrizProdutos.length; j++) {
-            if (produtoSelecionado != j){
-                novaMatrizProdutos[i] = matrizProdutos[j];
-                i++;
-            }
+        for (int i = 0; i < qtdTarefasSelecionadas; i++) {
+            System.out.print("\n(" + (i + 1) + ")\nÍndice da tarefa na lista: ");
+            listaTarefas.get(scanner.nextInt() - 1).nome = null;
+            scanner.nextLine();
         }
 
-        matrizProdutos = novaMatrizProdutos;
+        // Intenção: usar o laço 'for-each' para remover cada elemento dada uma condição
+        // Recomendação do IntelliJ: usar 'removeIf' em vez do laço 'for-each'
+        listaTarefas.removeIf(tarefa -> tarefa.nome == null);
 
-        System.out.println("Estoque removido com sucesso!\n");
-        for (Produto produto : matrizProdutos) {
-            System.out.println(produto);
-        }
+        System.out.println("\nTarefas removidas!");
     }
 
     public static void encerrePrograma() {

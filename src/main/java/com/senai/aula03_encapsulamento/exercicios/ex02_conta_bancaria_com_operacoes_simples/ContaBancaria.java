@@ -38,10 +38,11 @@ public class ContaBancaria {
     }
 
     // Funções
+
     public void depositar(double valor){
         if(valor > 0) {
             saldo += valor;
-            System.out.printf("Foi depositado R$%,.2f à conta. O novo saldo é R$%,.2f\n", valor, saldo);
+            System.out.printf("Foi depositado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
         } else {
             throw new IllegalArgumentException("O valor a ser depositado não pode ser negativo.");
         }
@@ -50,7 +51,7 @@ public class ContaBancaria {
     public void sacar(double valor){
         if(valor > 0 && valor < saldo) {
             saldo -= valor;
-            System.out.printf("Foi sacado R$%,.2f à conta. O novo saldo é R$%,.2f\n", valor, saldo);
+            System.out.printf("Foi sacado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
         } else {
             throw new IllegalArgumentException("O valor a ser sacado não pode ser negativo e deve ser menor do que o saldo.");
         }
@@ -59,6 +60,6 @@ public class ContaBancaria {
     @Override
     public String toString() {
         return  "Titular da conta bancária: " + titular + "\n" +
-                "Saldo: " + saldo;
+                "Saldo: " + saldo + "\n";
     }
 }

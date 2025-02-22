@@ -14,19 +14,19 @@ public class Funcionario {
             throw new IllegalArgumentException("O nome do funcionário não pode ser nulo ou vazio.");
         }
 
-        if (salario >= 1320){
+        if (salario > 1320){
             this.salario = salario;
         } else {
-            throw new IllegalArgumentException("O salário do funcionário não pode ser menor do que R$1320,00.");
+            throw new IllegalArgumentException("O salário do funcionário deve ser maior do que R$1320,00.");
         }
 
-        boolean cargoDisponivel = false;
-        for (int i = 0; i < cargosDisponiveis.length; i++) {
-            if(cargo.equalsIgnoreCase(cargosDisponiveis[i])){
-                cargoDisponivel = true;
+        this.cargo = null;
+        for (String cargoDisponivel : cargosDisponiveis) {
+            if (cargo.equalsIgnoreCase(cargoDisponivel)) {
+                this.cargo = cargo;
             }
         }
-        if (!cargoDisponivel){
+        if (this.cargo == null){
             throw new IllegalArgumentException("O cargo do funcionário deve constar na lista de cargos disponíveis.");
         }
     }
@@ -52,7 +52,7 @@ public class Funcionario {
     }
 
     public void setSalario(double salario){
-        if (salario >= 1320){
+        if (salario > 1320){
             this.salario = salario;
         } else {
             throw new IllegalArgumentException("O salário do funcionário não pode ser menor do que R$1320,00.");
@@ -65,13 +65,13 @@ public class Funcionario {
     }
 
     public void setCargo(String cargo){
-        boolean cargoDisponivel = false;
-        for (int i = 0; i < cargosDisponiveis.length; i++) {
-            if(cargo.equalsIgnoreCase(cargosDisponiveis[i])){
-                cargoDisponivel = true;
+        this.cargo = null;
+        for (String cargoDisponivel : cargosDisponiveis) {
+            if (cargo.equalsIgnoreCase(cargoDisponivel)) {
+                this.cargo = cargo;
             }
         }
-        if (!cargoDisponivel){
+        if (this.cargo == null){
             throw new IllegalArgumentException("O cargo do funcionário deve constar na lista de cargos disponíveis.");
         }
     }
@@ -81,7 +81,7 @@ public class Funcionario {
     public void aumentarPercentual(float percentual){
         if(percentual > 0) {
             salario += percentual/100 * salario;
-            System.out.printf("Foi aumentado " + percentual + "% ao salário do funcionário. O novo salário é R$%,.2f\n", salario);
+            System.out.printf("Foi aumentado " + percentual + " por cento ao salário do funcionário " + this.nome + ". O novo salário é R$%,.2f\n", salario);
         } else {
             throw new IllegalArgumentException("O percentual a ser aumentado não pode ser negativo.");
         }
@@ -91,6 +91,6 @@ public class Funcionario {
     public String toString() {
         return  "Nome do funcionário: " + nome + "\n" +
                 "Salário: " + salario + "\n" +
-                "Cargo: " + cargo;
+                "Cargo: " + cargo + "\n";
     }
 }

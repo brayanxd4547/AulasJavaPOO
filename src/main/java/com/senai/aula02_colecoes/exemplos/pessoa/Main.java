@@ -1,9 +1,6 @@
 package com.senai.aula02_colecoes.exemplos.pessoa;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Scanner;
 
 public class Main {

@@ -1,5 +1,6 @@
-package com.senai.aula01_introducao_poo.exercicios.ex01_cadastro_de_produtos;
+package com.senai.aula02_colecoes.exercicios.ex02_controle_de_estoque_de_produtos;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,42 +9,39 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static Produto[] matrizProdutos = {
-            new Produto("Macarrão", 15f, 1200),
-            new Produto("Sopa de tomate", 10f, 1400),
-    };
-    static int produtoSelecionado;
+    static ArrayList<Estoque> listaEstoques = new ArrayList<>();
+    static int qtdEstoquesSelecionados;
 
     public static void main(String[] args) {
         do {
             mostrarMenu();
             switch (opcao) {
                 case 1:
-                    crieNovoEstoque();
+                    adicionarEstoques();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 2:
-                    exibaEstoque();
+                    listarEstoques();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 3:
-                    atualizeEstoque();
+                    atualizarQtdProdutos();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 4:
-                    calculeValoresTotais();
+                    removerEstoques();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 5:
-                    removerEstoque();
+                    buscarEstoque();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
@@ -58,189 +56,173 @@ public class Main {
     public static void mostrarMenu() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                               MENU                                 ║
+                ║                  CONTROLE DE ESTOQUE DE PRODUTOS                   ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  Selecione uma opção:                                              ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║  1  ║   Criar novos estoques de produtos                           ║
-                ║  2  ║   Exibir informações de um produto                           ║
-                ║  3  ║   Atualizar o estoque de um produto                          ║
-                ║  4  ║   Calcular o valor total do estoque de um produto            ║
-                ║  5  ║   Remover um estoque                                         ║
+                ║  1  ║   Adicionar novos estoques de produtos                       ║
+                ║  2  ║   Listar todos os estoques                                   ║
+                ║  3  ║   Atualizar quantidade de produtos em um estoque             ║
+                ║  4  ║   Remover um estoque de produtos                             ║
+                ║  5  ║   Buscar informações de um estoque pelo nome do produto      ║
                 ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
         opcao = scanner.nextInt();
         scanner.nextLine();
     }
 
-    public static void crieNovoEstoque() {
+    public static void adicionarEstoques() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                 CRIAR NOVOS ESTOQUES DE PRODUTOS                   ║
+                ║                      ADICIONAR NOVOS ESTOQUES                      ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║     Insira a quantidade de novos estoques que deseja registrar     ║
-                ║     e os dados do estoque do produto a ser criado.                 ║
+                ║     Insira a quantidade de estoques que deseja adicionar, o        ║
+                ║     produto de cada estoque e as suas quantidades.                 ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        int qtdNovosProdutos = scanner.nextInt();
+        System.out.print("Quantidade de novos estoques: ");
+        qtdEstoquesSelecionados = scanner.nextInt();
         scanner.nextLine();
-        Produto[] novaMatrizProdutos = new Produto[qtdNovosProdutos + matrizProdutos.length];
-
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            novaMatrizProdutos[i] = matrizProdutos[i];
+        for (int i = 0; i < qtdEstoquesSelecionados; i++) {
+            System.out.print("\n(" + (i + 1) + ")" + "\nInsira o produto do estoque: ");
+            String produto = scanner.nextLine().toLowerCase();
+            System.out.print("Insira a quantidade de " + produto + " no estoque: ");
+            listaEstoques.add(new Estoque(produto, scanner.nextInt()));
+            scanner.nextLine();
         }
 
-        for (int i = matrizProdutos.length; i < novaMatrizProdutos.length; i++) {
-            String[] dadosProduto = new String[3];
-
-            System.out.print("Nome do produto: ");
-            dadosProduto[0] = scanner.nextLine();
-
-            System.out.print("Preço do produto em reais: ");
-            dadosProduto[1] = scanner.nextLine();
-
-            System.out.print("Quantidade do produto no estoque: ");
-            dadosProduto[2] = scanner.nextLine();
-
-            novaMatrizProdutos[i] = new Produto(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
-
-            System.out.println("______________________________\n");
-        }
-
-        matrizProdutos = novaMatrizProdutos;
-
-        System.out.println("Novos estoques registrados com sucesso!\n");
+        System.out.println("\nEstoques adicionados!");
     }
 
-    public static void exibaEstoque() {
+    public static void listarEstoques() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
+                ║                           LISTAR ESTOQUES                          ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║        Selecione um produto para visualizar as informações:        ║
+                ║         Segue a lista de todos os estoques de produtos.            ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.produto + " | Quantidade: " + estoque.quantidade);
+            for (int i = 0; i < 69 - ("║  " + listaEstoques.indexOf(estoque) + "  ║  " + estoque.produto + " | Quantidade: " + estoque.quantidade).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
-
-        produtoSelecionado = scanner.nextInt() - 1;
-        scanner.nextLine();
-
-        matrizProdutos[produtoSelecionado].exibirDetalhes();
     }
 
-    public static void atualizeEstoque() {
+    public static void atualizarQtdProdutos() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
+                ║           ATUALIZAR QUANTIDADE DE PRODUTOS NOS ESTOQUES            ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║          Selecione um produto para atualizar as quantidade:        ║
+                ║      Selecione um ou mais estoques para atualizar a sua            ║
+                ║      quantidade de produtos.                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.produto + " | Quantidade: " + estoque.quantidade);
+            for (int i = 0; i < 69 - ("║  " + listaEstoques.indexOf(estoque) + "  ║  " + estoque.produto + " | Quantidade: " + estoque.quantidade).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        System.out.print("Quantidade de estoques a terem sua quantidade de produtos alterada: ");
+        qtdEstoquesSelecionados = scanner.nextInt();
         scanner.nextLine();
-
-        String input;
-        do {
-            System.out.println("Você deseja acrescentar ou remover uma quantidade do estoque? (A para acrescentar / R para remover)");
-            input = scanner.nextLine();
-        } while (!(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("r")));
-
-        boolean escolha = input.equalsIgnoreCase("a");
-
-        System.out.println("Quantos produtos você deseja " + (escolha ? "acrescentar " : "remover ") + "do estoque?");
-        matrizProdutos[produtoSelecionado].atualizaEstoque(escolha, scanner.nextInt());
-        scanner.nextLine();
-
-        System.out.println(matrizProdutos[produtoSelecionado]);
-    }
-
-    public static void calculeValoresTotais() {
-        System.out.print("""
-                ╔════════════════════════════════════════════════════════════════════╗
-                ║         TABELA DOS VALORES TOTAIS DOS ESTOQUES DOS PRODUTOS        ║
-                ╚════════════════════════════════════════════════════════════════════╝
-                """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.printf("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome + ": R$%,.2f\n", matrizProdutos[i].calcularValorEstoque());
+        for (int i = 0; i < qtdEstoquesSelecionados; i++) {
+            System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
+            int indice = scanner.nextInt() - 1;
+            scanner.nextLine();
+            System.out.print("Nova quantidade de " + listaEstoques.get(indice).produto + " no estoque: ");
+            listaEstoques.get(indice).quantidade = scanner.nextInt();
+            scanner.nextLine();
         }
-        System.out.println("""
-                ╔════════════════════════════════════════════════════════════════════╗
-                ║                  © Lopes Supermercados, 2025                       ║
-                ╚════════════════════════════════════════════════════════════════════╝
-                """);
+
+        System.out.println("\nEstoques alterados!");
     }
 
-    public static void removerEstoque() {
+    public static void removerEstoques() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                    REMOVER UM ESTOQUE DE PRODUTOS                  ║
+                ║                         REMOVER ESTOQUES                           ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║               Selecione um estoque para ser removido:              ║
+                ║         Selecione um ou mais estoques para serem removidos.        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        for (int i = 0; i < matrizProdutos.length; i++) {
-            System.out.print("║  " + (i + 1) + "  ║   " + matrizProdutos[i].nome);
-            for (int j = 0; j < 59 - matrizProdutos[i].nome.length(); j++) {
+        listaEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.produto);
+            for (int i = 0; i < 69 - ("║  " + listaEstoques.indexOf(estoque) + "  ║  " + estoque.produto).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
-        }
+        });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                  © Lopes Supermercados, 2025                       ║
+                ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        produtoSelecionado = scanner.nextInt() - 1;
+        System.out.print("Quantidade de estoques a serem removidos: ");
+        qtdEstoquesSelecionados = scanner.nextInt();
         scanner.nextLine();
-        Produto[] novaMatrizProdutos = new Produto[matrizProdutos.length - 1];
 
-        int i = 0;
-        for (int j = 0; j < matrizProdutos.length; j++) {
-            if (produtoSelecionado != j){
-                novaMatrizProdutos[i] = matrizProdutos[j];
-                i++;
+        for (int i = 0; i < qtdEstoquesSelecionados; i++) {
+            System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
+            listaEstoques.get(scanner.nextInt() - 1).produto = null;
+            scanner.nextLine();
+        }
+
+        // Intenção: usar o laço 'for-each' para remover cada elemento dada uma condição
+        // Recomendação do IntelliJ: usar 'removeIf' em vez do laço 'for-each'
+        listaEstoques.removeIf(estoque -> estoque.produto == null);
+
+        System.out.println("Estoques removidos!");
+    }
+
+    public static void buscarEstoque(){
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                         BUSCAR UM ESTOQUE                          ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║         Selecione o nome do produto de um estoque para             ║
+                ║         buscar suas informações.                                   ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        listaEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.produto);
+            for (int i = 0; i < 69 - ("║  " + listaEstoques.indexOf(estoque) + "  ║  " + estoque.produto).length(); i++) {
+                System.out.print(" ");
             }
-        }
+            System.out.println("║");
+        });
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                    © Lopes Supermercados, 2025                     ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
 
-        matrizProdutos = novaMatrizProdutos;
-
-        System.out.println("Estoque removido com sucesso!\n");
-        for (Produto produto : matrizProdutos) {
-            System.out.println(produto);
-        }
+        String produtoEscolhido = scanner.nextLine().toLowerCase();
+        listaEstoques.stream().filter(estoque -> estoque.produto.equals(produtoEscolhido)).forEach(System.out::println);
     }
 
     public static void encerrePrograma() {

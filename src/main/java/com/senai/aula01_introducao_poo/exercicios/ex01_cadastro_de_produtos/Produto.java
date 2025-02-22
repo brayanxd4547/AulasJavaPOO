@@ -11,21 +11,20 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public void atualizaEstoque(boolean incrementar, int mudaQtd){
+    public void exibirDetalhes() {
+        System.out.println("Nome do produto: " + nome + '\n' +
+                           "Preço: " + preco + '\n' +
+                           "Quantidade em estoque: " + quantidade + '\n');
+    }
+
+    public void atualizaEstoque(boolean incrementar, int mudaQtd) {
         System.out.println("Ao estoque de " + nome + " foi " + (incrementar ? "incrementado " : "reduzido " + mudaQtd + " itens."));
         mudaQtd = incrementar ? mudaQtd : mudaQtd * -1;
         quantidade += mudaQtd;
         System.out.println();
     }
 
-    public float calcularValorEstoque(){
+    public float calcularValorEstoque() {
         return quantidade * preco;
-    }
-
-    @Override
-    public String toString() {
-        return "Nome do produto: " + nome + '\n' +
-                "Preço: " + preco + '\n' +
-                "Quantidade em estoque: " + quantidade + '\n';
     }
 }

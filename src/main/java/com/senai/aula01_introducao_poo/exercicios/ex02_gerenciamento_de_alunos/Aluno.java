@@ -11,24 +11,17 @@ public class Aluno {
         this.nota = nota;
     }
 
-    public String exibirInformacoes(){
-        return "Nome do aluno: " + this.nome + '\n' +
-               "Idade: " + this.idade + '\n' +
-               "Nota: " + this.nota + '\n';
+    public void exibirInformacoes() {
+        System.out.println("Nome do aluno: " + this.nome + '\n' +
+                           "Idade: " + this.idade + '\n' +
+                           "Nota: " + this.nota + '\n');
     }
 
-    public void atualizaNota(float novaNota){
+    public void atualizaNota(float novaNota) {
         this.nota = novaNota;
     }
 
-    public boolean verificarAprovacao(){
+    public boolean verificarAprovacao() {
         return this.nota >= 6;
-    }
-
-    @Override
-    public String toString() {
-        return "Nome do aluno: " + nome + '\n' +
-               "Idade: " + idade + '\n' +
-               "Nota: " + nota + '\n';
     }
 }

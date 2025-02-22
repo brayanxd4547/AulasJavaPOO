@@ -67,7 +67,7 @@ public class Main {
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  1  ║   Registrar novos alunos                                     ║
                 ║  2  ║   Exibir informações de um aluno                             ║
-                ║  3  ║   Atualizar a nota de um produto                             ║
+                ║  3  ║   Atualizar a nota de um aluno                               ║
                 ║  4  ║   Apagar o registro de um aluno                              ║
                 ║  5  ║   Verificar aprovação de aluno                               ║
                 ║  6  ║   Sair                                                       ║
@@ -150,13 +150,13 @@ public class Main {
         alunoSelecionado = scanner.nextInt() - 1;
         scanner.nextLine();
 
-        System.out.println(matrizAlunos[alunoSelecionado]);
+        matrizAlunos[alunoSelecionado].exibirInformacoes();
     }
 
     public static void atualizeAluno() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
+                ║                    ATUALIZAR A NOTA DE UM ALUNO                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║             Selecione um aluno para atualizar as nota:             ║
                 ╠════════════════════════════════════════════════════════════════════╣

@@ -6,11 +6,13 @@ public class Main {
 
         System.out.println("Nome do produto: " + produto00.getNome());
         System.out.printf("Preço do produto: R$%,.2f\n", produto00.getPreco());
+        System.out.println();
 
         produto00.setNome("Sopa de frango");
         produto00.setPreco(20);
 
         System.out.println("Nome do produto: " + produto00.getNome());
         System.out.printf("Preço do produto: R$%,.2f\n", produto00.getPreco());
+        System.out.println();
     }
 }
