@@ -8,7 +8,7 @@ public class Funcionario {
     String[] cargosDisponiveis = {"gerente", "analista", "programador"};
 
     public Funcionario(String nome, double salario, String cargo) {
-        if (!nome.isEmpty() && nome != null){
+        if (!nome.isEmpty()){
             this.nome = nome;
         } else {
             throw new IllegalArgumentException("O nome do funcionário não pode ser nulo ou vazio.");
@@ -24,6 +24,7 @@ public class Funcionario {
         for (String cargoDisponivel : cargosDisponiveis) {
             if (cargo.equalsIgnoreCase(cargoDisponivel)) {
                 this.cargo = cargo;
+                break;
             }
         }
         if (this.cargo == null){
@@ -39,7 +40,7 @@ public class Funcionario {
     }
 
     public void setNome(String nome){
-        if (!nome.isEmpty() && nome != null){
+        if (!nome.isEmpty()){
             this.nome = nome;
         } else {
             throw new IllegalArgumentException("O nome do funcionário não pode ser nulo ou vazio.");
@@ -69,6 +70,7 @@ public class Funcionario {
         for (String cargoDisponivel : cargosDisponiveis) {
             if (cargo.equalsIgnoreCase(cargoDisponivel)) {
                 this.cargo = cargo;
+                break;
             }
         }
         if (this.cargo == null){
