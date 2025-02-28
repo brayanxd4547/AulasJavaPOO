@@ -1,4 +1,4 @@
-package com.senai.aula03_encapsulamento.exercicios.ex03_gerenciamento_de_funcionarios.ex02_conta_bancaria_com_operacoes_simples;
+package com.senai.aula03_encapsulamento.exercicios.ex03_gerenciamento_de_funcionarios;
 
 public class Funcionario {
     private String nome;

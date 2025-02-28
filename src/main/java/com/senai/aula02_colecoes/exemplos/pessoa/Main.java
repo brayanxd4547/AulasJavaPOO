@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+ 
         Pessoa pessoa1 = new Pessoa("Umberto", 10);
         Pessoa pessoa2 = new Pessoa("Doisberto", 20);
         Pessoa pessoa3 = new Pessoa("Tresberto", 30);
