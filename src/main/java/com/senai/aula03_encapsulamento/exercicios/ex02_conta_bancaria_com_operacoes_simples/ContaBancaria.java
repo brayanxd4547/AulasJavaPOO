@@ -1,5 +1,7 @@
 package com.senai.aula03_encapsulamento.exercicios.ex02_conta_bancaria_com_operacoes_simples;
 
+import java.util.Objects;
+
 public class ContaBancaria {
     private String titular;
     private double saldo;
@@ -9,7 +11,7 @@ public class ContaBancaria {
         if (saldo >= 0){
             this.saldo = saldo;
         } else {
-            throw new IllegalArgumentException("O saldo da conta bancária não pode ser negativo.");
+            System.out.println("O saldo da conta bancária não pode ser negativo.");
         }
     }
 
@@ -29,32 +31,46 @@ public class ContaBancaria {
         return saldo;
     }
 
-    public void setSaldo(double saldo){
-        if (saldo >= 0){
-            this.saldo = saldo;
-        } else {
-            throw new IllegalArgumentException("O saldo da conta bancária não pode ser negativo.");
-        }
-    }
-
     // Funções
 
-    public void depositar(double valor){
+    public boolean depositar(double valor){
         if(valor > 0) {
             saldo += valor;
             System.out.printf("Foi depositado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
+            return true;
         } else {
-            throw new IllegalArgumentException("O valor a ser depositado não pode ser negativo.");
+            System.out.println("O valor a ser depositado não pode ser negativo.");
+            return false;
         }
     }
 
-    public void sacar(double valor){
+    public boolean sacar(double valor){
         if(valor > 0 && valor < saldo) {
             saldo -= valor;
             System.out.printf("Foi sacado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
+            return true;
         } else {
-            throw new IllegalArgumentException("O valor a ser sacado não pode ser negativo e deve ser menor do que o saldo.");
+            System.out.println("O valor a ser sacado não pode ser negativo e deve ser menor do que o saldo.");
+            return false;
         }
+    }
+
+    public void transferir(double valor, ContaBancaria contaDestino){
+        if (this.sacar(valor)) {
+            contaDestino.depositar(valor);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ContaBancaria that = (ContaBancaria) o;
+        return Double.compare(saldo, that.saldo) == 0 && Objects.equals(titular, that.titular);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titular, saldo);
     }
 
     @Override

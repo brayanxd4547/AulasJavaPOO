@@ -7,28 +7,26 @@ public class Funcionario {
 
     String[] cargosDisponiveis = {"gerente", "analista", "programador"};
 
-    public Funcionario(String nome, double salario, String cargo) {
-        if (!nome.isEmpty()){
+    public Funcionario(String nome, double salario, int idCargo) {
+        if (!nome.isBlank()){
             this.nome = nome;
         } else {
-            throw new IllegalArgumentException("O nome do funcionário não pode ser nulo ou vazio.");
+            System.out.println("O nome do funcionário não pode ser nulo ou vazio. Seu nome será atribuído como 'Funcionario'");
+            this.nome = "Funcionario";
         }
 
         if (salario > 1320){
             this.salario = salario;
         } else {
-            throw new IllegalArgumentException("O salário do funcionário deve ser maior do que R$1320,00.");
+            System.out.println("O salário do funcionário deve ser maior do que R$1320,00. Seu salario será redefinido para tal valor.");
+            this.salario = 1320;
         }
 
-        this.cargo = null;
-        for (String cargoDisponivel : cargosDisponiveis) {
-            if (cargo.equalsIgnoreCase(cargoDisponivel)) {
-                this.cargo = cargo;
-                break;
-            }
-        }
-        if (this.cargo == null){
-            throw new IllegalArgumentException("O cargo do funcionário deve constar na lista de cargos disponíveis.");
+        if (idCargo < cargosDisponiveis.length + 1 && idCargo <= 1) {
+                this.cargo = cargosDisponiveis[idCargo];
+        } else {
+            System.out.println("O idCargo do funcionário deve constar na lista de cargos disponíveis. Seu idCargo será definido como 'programador'");
+            this.cargo = cargosDisponiveis[2];
         }
     }
 
@@ -40,14 +38,15 @@ public class Funcionario {
     }
 
     public void setNome(String nome){
-        if (!nome.isEmpty()){
+        if (!nome.isBlank()){
             this.nome = nome;
         } else {
-            throw new IllegalArgumentException("O nome do funcionário não pode ser nulo ou vazio.");
+            System.out.println("O nome do funcionário não pode ser nulo ou vazio. Seu nome será atribuído como 'Funcionario'");
+            this.nome = "Funcionario";
         }
     }
 
-    // Preço
+    // Salário
     public double getSalario(){
         return salario;
     }
@@ -56,7 +55,7 @@ public class Funcionario {
         if (salario > 1320){
             this.salario = salario;
         } else {
-            throw new IllegalArgumentException("O salário do funcionário não pode ser menor do que R$1320,00.");
+            System.out.println("O salário do funcionário não pode ser menor do que R$1320,00.");
         }
     }
 
@@ -65,27 +64,23 @@ public class Funcionario {
         return cargo;
     }
 
-    public void setCargo(String cargo){
-        this.cargo = null;
-        for (String cargoDisponivel : cargosDisponiveis) {
-            if (cargo.equalsIgnoreCase(cargoDisponivel)) {
-                this.cargo = cargo;
-                break;
-            }
-        }
-        if (this.cargo == null){
-            throw new IllegalArgumentException("O cargo do funcionário deve constar na lista de cargos disponíveis.");
+    public void setCargo(int idCargo){
+        if (idCargo < cargosDisponiveis.length + 1 && idCargo <= 1) {
+            this.cargo = cargosDisponiveis[idCargo];
+        } else {
+            System.out.println("O idCargo do funcionário deve constar na lista de cargos disponíveis. Seu idCargo será definido como 'programador'");
+            this.cargo = cargosDisponiveis[2];
         }
     }
 
     // Funções
 
-    public void aumentarPercentual(float percentual){
-        if(percentual > 0) {
-            salario += percentual/100 * salario;
-            System.out.printf("Foi aumentado " + percentual + " por cento ao salário do funcionário " + this.nome + ". O novo salário é R$%,.2f\n", salario);
+    public void aumentarPercentual(float percentagem){
+        if(percentagem > 0) {
+            salario += percentagem /100 * salario;
+            System.out.printf("Foi aumentado " + percentagem + " por cento ao salário do funcionário " + this.nome + ". O novo salário é R$%,.2f\n", salario);
         } else {
-            throw new IllegalArgumentException("O percentual a ser aumentado não pode ser negativo.");
+            System.out.println("O percentagem a ser aumentado não pode ser negativo.");
         }
     }
 
