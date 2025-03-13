@@ -18,8 +18,8 @@ public class Funcionario {
         if (salario > 1320){
             this.salario = salario;
         } else {
-            System.out.println("O salário do funcionário deve ser maior do que R$1320,00. Seu salario será redefinido para tal valor.");
-            this.salario = 1320;
+            System.out.println("O salário do funcionário deve ser maior do que R$1320,00. Seu salario será redefinido para R$2000,00.");
+            this.salario = 2000;
         }
 
         if (idCargo < cargosDisponiveis.length + 1 && idCargo <= 1) {
