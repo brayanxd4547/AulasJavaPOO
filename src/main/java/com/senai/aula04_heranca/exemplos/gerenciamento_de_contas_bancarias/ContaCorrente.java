@@ -12,7 +12,7 @@ public class ContaCorrente extends ContaBancaria {
         return limite;
     }
 
-    public void setLimite(double limite) {
+    public void setLimite(double limite)  {
         this.limite = limite;
     }
 

@@ -8,9 +8,17 @@ public class ContaPoupanca extends ContaBancaria {
         this.taxaDeRendimento = taxaDeRendimento;
     }
 
-    //todo: GETTER E SETTER
+    public double getTaxaDeRendimento() {
+        return taxaDeRendimento;
+    }
+
+    public void setTaxaDeRendimento(double taxaDeRendimento) {
+        this.taxaDeRendimento = taxaDeRendimento;
+        System.out.println("A taxa de rendimento foi redefinida para " + taxaDeRendimento + "%.");
+    }
 
     public void aplicarRendimento(){
         saldo += taxaDeRendimento/100 * saldo;
+        System.out.println("Foi aplicado um rendimento de " + this.taxaDeRendimento + "%. O novo saldo da conta é " + this.saldo);
     }
 }

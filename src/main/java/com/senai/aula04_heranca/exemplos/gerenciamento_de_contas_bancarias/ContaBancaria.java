@@ -48,6 +48,7 @@ public class ContaBancaria {
     }
 
     public void transferir(double valor, ContaBancaria contaDestino) {
+        System.out.printf("Solicitação de transferência de R$%,.2f de %s para %s:\n", valor, this.titular, contaDestino.getTitular());
         if (this.sacar(valor)) {
             contaDestino.depositar(valor);
         }
