@@ -1,19 +1,19 @@
 package com.senai.aula04_heranca.exercicios.ex01_controle_de_estoque;
 
 public class Estoque {
-    private String produto;
+    private Produto produto;
     private int quantidade;
 
-    public Estoque(String produto, int quantidade) {
+    public Estoque(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
     }
 
-    public String getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(String produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 

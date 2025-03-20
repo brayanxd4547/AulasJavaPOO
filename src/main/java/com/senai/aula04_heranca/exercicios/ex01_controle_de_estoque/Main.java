@@ -10,15 +10,16 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static ArrayList<String> tiposDeProdutos = new ArrayList<>(Arrays.asList("Alimento", "Eletrônico"));
-
+    static ArrayList<String> listaTiposDeProdutos = new ArrayList<>(Arrays.asList("Alimento", "Eletrônico"));
     static ArrayList<Estoque> listaDeEstoques = new ArrayList<>();
 
-    static public String[] atributosProduto = {"nome", "preço", "marca"};
-
+    static public String[] atributosPadraoProduto = {"Nome", "Preço", "Marca"};
     static int qtdEstoquesSelecionados;
 
     public static void main(String[] args) {
+        listaDeEstoques.add(new Estoque(new Alimento("maçã", 3, "pomera", "23-04-2025"), 1000));
+        listaDeEstoques.add(new Estoque(new Alimento("banana", 3, "ananasia", "23-04-2025"), 1000));
+
         do {
             mostrarMenu();
 
@@ -28,13 +29,13 @@ public class Main {
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
-/*
+
                 case 2:
                     listarEstoques();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
-
+/*
                 case 3:
                     atualizarQtdProdutos();
                     System.out.println("Digite qualquer tecla para continuar...");
@@ -90,9 +91,9 @@ public class Main {
                 ║     Insira o tipo do produto do estoque que deseja adicionar.      ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣""");
-        tiposDeProdutos.forEach(tipo -> {
-            System.out.print("║  " + (tiposDeProdutos.indexOf(tipo) + 1) + "  ║  " + tipo);
-            for (int i = 0; i < 69 - ("║  " + tiposDeProdutos.indexOf(tipo) + "  ║  " + tipo).length(); i++) {
+        listaTiposDeProdutos.forEach(tipo -> {
+            System.out.print("║  " + (listaTiposDeProdutos.indexOf(tipo) + 1) + "  ║  " + tipo);
+            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(tipo) + "  ║  " + tipo).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -104,7 +105,11 @@ public class Main {
                 """);
 
         System.out.print(">> ");
-        String tipoSelecionado = tiposDeProdutos.get(scanner.nextInt() - 1);
+        int tipoProdutoSelecionado = scanner.nextInt() - 1;
+        while (tipoProdutoSelecionado >= listaTiposDeProdutos.size() || tipoProdutoSelecionado < 0){
+            System.out.println("Tipo selecionado inválido. Tente novamente.");
+            tipoProdutoSelecionado = scanner.nextInt() - 1;
+        }
 
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
@@ -122,30 +127,40 @@ public class Main {
         qtdEstoquesSelecionados = scanner.nextInt();
         scanner.nextLine();
         for (int i = 0; i < qtdEstoquesSelecionados; i++) {
-
-            for (int j = 0; j < atributosProduto.length; j++) {
-                //TODO: Termina isso aqui
+            System.out.println("\nDigite as seguintes informações sobre o produto.");
+            String[] atributosNovoProduto = new String[3];
+            for (int j = 0; j < atributosPadraoProduto.length; j++) {
+                System.out.print(atributosPadraoProduto[j] + ": ");
+                atributosNovoProduto[j] = scanner.nextLine().toLowerCase();
             }
 
-            System.out.println("\nEstoque " + (i + 1) + ":");
+            switch (tipoProdutoSelecionado) {
+                case 0:
+                    System.out.print("Data de validade: ");
+                    String dataValidade = scanner.nextLine();
 
-            System.out.println("Insira o nome do produto desse estoque: ");
-            String nome = scanner.nextLine().toLowerCase();
+                    System.out.print("Quantidade do produto nesse estoque: ");
 
-            System.out.println("Insira o preço do produto desse estoque: ");
-            String preco = scanner.nextLine().toLowerCase();
+                    listaDeEstoques.add(new Estoque(new Alimento(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], dataValidade), scanner.nextInt()));
+                    break;
+                case 1:
+                    System.out.print("Tensão elétrica: ");
+                    float tensaoEletrica = scanner.nextFloat();
 
-            System.out.println("Insira o preço do produto desse estoque: ");
-            String marca = scanner.nextLine().toLowerCase();
+                    System.out.print("Corrente elétrica: ");
+                    float correnteEletrica = scanner.nextFloat();
 
-            System.out.print("Insira a quantidade de " + nome + " nesse estoque: ");
-            listaDeEstoques.add(new Estoque(nome, scanner.nextInt()));
+                    System.out.print("Quantidade do produto nesse estoque: ");
+
+                    listaDeEstoques.add(new Estoque(new Eletronico(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], tensaoEletrica, correnteEletrica), scanner.nextInt()));
+                    break;
+            }
             scanner.nextLine();
         }
 
         System.out.println("\nEstoques adicionados!");
     }
-/*
+
     public static void listarEstoques() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
@@ -154,9 +169,10 @@ public class Main {
                 ║         Segue a lista de todos os estoques de produtos.            ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        tiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (tiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade());
-            for (int i = 0; i < 69 - ("║  " + tiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade()).length(); i++) {
+
+        listaDeEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaDeEstoques.indexOf(estoque) + 1) + "  ║  " + (estoque.getProduto().getNome()) + " (marca " + estoque.getProduto().getMarca() + ") | Quantidade: " + estoque.getQuantidade());
+            for (int i = 0; i < 69 - ("║  " + (listaDeEstoques.indexOf(estoque) + 1) + "  ║  " + (estoque.getProduto().getNome()) + " (marca " + estoque.getProduto().getMarca() + ") | Quantidade: " + estoque.getQuantidade()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -166,6 +182,20 @@ public class Main {
                 ║                    © Lopes Supermercados, 2025                     ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
+
+        while(true){
+            System.out.print("\nDigite o índice do produto na lista para verificar suas informações específicas ou digite I para voltar ao início.\n>> ");
+            String opcaoInformacoes = scanner.nextLine();
+            try {
+                listaDeEstoques.get(Integer.parseInt(opcaoInformacoes)).getProduto().exibirInformacoes();
+            } catch (NumberFormatException e){
+                if (!opcaoInformacoes.equalsIgnoreCase("I")){
+                    System.out.println("Esta opção não é válida. Tente novamente.");
+                } else {
+                    break;
+                }
+            }
+        }
     }
 
     public static void atualizarQtdProdutos() {
@@ -177,9 +207,9 @@ public class Main {
                 ║      quantidade de produtos.                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        tiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (tiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade());
-            for (int i = 0; i < 69 - ("║  " + tiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade()).length(); i++) {
+        listaTiposDeProdutos.forEach(estoque -> {
+            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade());
+            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -197,14 +227,15 @@ public class Main {
             System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
             int indice = scanner.nextInt() - 1;
             scanner.nextLine();
-            System.out.print("Nova quantidade de " + tiposDeProdutos.get(indice).getProduto() + " no estoque: ");
-            tiposDeProdutos.get(indice).setQuantidade(scanner.nextInt());
+            System.out.print("Nova quantidade de " + listaTiposDeProdutos.get(indice).getProduto() + " no estoque: ");
+            listaTiposDeProdutos.get(indice).setQuantidade(scanner.nextInt());
             scanner.nextLine();
         }
 
         System.out.println("\nEstoques alterados!");
     }
 
+    /*
     public static void removerEstoques() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
@@ -213,9 +244,9 @@ public class Main {
                 ║         Selecione um ou mais estoques para serem removidos.        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        tiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (tiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
-            for (int i = 0; i < 69 - ("║  " + tiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
+        listaTiposDeProdutos.forEach(estoque -> {
+            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
+            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -232,13 +263,13 @@ public class Main {
 
         for (int i = 0; i < qtdEstoquesSelecionados; i++) {
             System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
-            tiposDeProdutos.get(scanner.nextInt() - 1).setProduto(null);
+            listaTiposDeProdutos.get(scanner.nextInt() - 1).setProduto(null);
             scanner.nextLine();
         }
 
         // Intenção: usar o laço 'for-each' para remover cada elemento dada uma condição
         // Recomendação do IntelliJ: usar 'removeIf' em vez do laço 'for-each'
-        tiposDeProdutos.removeIf(estoque -> estoque.getProduto() == null);
+        listaTiposDeProdutos.removeIf(estoque -> estoque.getProduto() == null);
 
         System.out.println("Estoques removidos!");
     }
@@ -252,9 +283,9 @@ public class Main {
                 ║         buscar suas informações.                                   ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        tiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (tiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
-            for (int i = 0; i < 69 - ("║  " + tiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
+        listaTiposDeProdutos.forEach(estoque -> {
+            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
+            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -266,7 +297,7 @@ public class Main {
                 """);
 
         String produtoEscolhido = scanner.nextLine().toLowerCase();
-        tiposDeProdutos.stream().filter(estoque -> estoque.getProduto().equals(produtoEscolhido)).forEach(System.out::println);
+        listaTiposDeProdutos.stream().filter(estoque -> estoque.getProduto().equals(produtoEscolhido)).forEach(System.out::println);
     }
 
     public static void encerrePrograma() {
