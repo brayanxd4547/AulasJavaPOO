@@ -26,6 +26,8 @@ public class Estoque {
     }
 
     public void exibirInformacoes(){
-        System.out.println("Produto: " + produto + "  |  Quantidade: " + quantidade);
+        System.out.println("Informações do produto: ");
+        produto.exibirInformacoes();
+        System.out.println("Quantidade: " + quantidade);
     }
 }

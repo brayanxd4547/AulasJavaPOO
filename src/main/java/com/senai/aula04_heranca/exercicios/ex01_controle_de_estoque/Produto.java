@@ -36,10 +36,10 @@ public class Produto {
     }
 
     public void exibirInformacoes() {
-        System.out.print(
-                "Produto: " + this.nome + "\n" +
-                "Preço: " + this.preco + "\n" +
-                "Marca: " + this.marca + "\n"
-        );
+        System.out.printf("""
+                 | Nome do produto: %s
+                 | Preço: %,.2f
+                 | Marca: %s
+                """, nome, preco, marca);
     }
 }

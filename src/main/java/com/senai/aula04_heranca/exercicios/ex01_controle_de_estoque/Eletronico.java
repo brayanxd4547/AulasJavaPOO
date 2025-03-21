@@ -28,9 +28,9 @@ public class Eletronico extends Produto{
 
     public void exibirInformacoes() {
         super.exibirInformacoes();
-        System.out.print(
-                "Tensão elétrica: " + this.tensaoEletrica + "\n" +
-                "Corrente elétrica: " + this.tensaoEletrica + "\n"
-        );
+        System.out.printf("""
+                 | Tensão elétrica: %sV
+                 | Corrente elétrica: %sA
+                """, tensaoEletrica, correnteEletrica);
     }
 }

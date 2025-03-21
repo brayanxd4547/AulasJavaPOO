@@ -10,15 +10,17 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static ArrayList<String> listaTiposDeProdutos = new ArrayList<>(Arrays.asList("Alimento", "Eletrônico"));
+    static ArrayList<String> listaTiposDeProdutos = new ArrayList<>(Arrays.asList("Alimento", "Brindquedo", "Eletrônico", "Roupa"));
     static ArrayList<Estoque> listaDeEstoques = new ArrayList<>();
 
     static public String[] atributosPadraoProduto = {"Nome", "Preço", "Marca"};
     static int qtdEstoquesSelecionados;
 
     public static void main(String[] args) {
-        listaDeEstoques.add(new Estoque(new Alimento("maçã", 3, "pomera", "23-04-2025"), 1000));
-        listaDeEstoques.add(new Estoque(new Alimento("banana", 3, "ananasia", "23-04-2025"), 1000));
+        listaDeEstoques.add(new Estoque(new Alimento("maçã", 3, "Pomera Agro", "23-04-2025"), 1000));
+        listaDeEstoques.add(new Estoque(new Brinquedo("baldinho de areia", 5, "Play-full", "vermelho"), 1000));
+        listaDeEstoques.add(new Estoque(new Eletronico("ventilador", 300, "Mondeal", 110, 2), 2000));
+        listaDeEstoques.add(new Estoque(new Roupa("calça jeans", 100, "Levi's", "azul claro"), 1000));
 
         do {
             mostrarMenu();
@@ -32,10 +34,8 @@ public class Main {
 
                 case 2:
                     listarEstoques();
-                    System.out.println("Digite qualquer tecla para continuar...");
-                    scanner.nextLine();
                     break;
-/*
+
                 case 3:
                     atualizarQtdProdutos();
                     System.out.println("Digite qualquer tecla para continuar...");
@@ -56,7 +56,7 @@ public class Main {
 
                 case 6:
                     encerrePrograma();
-                    break;*/
+                    break;
             }
         } while (!sair);
     }
@@ -131,7 +131,7 @@ public class Main {
             String[] atributosNovoProduto = new String[3];
             for (int j = 0; j < atributosPadraoProduto.length; j++) {
                 System.out.print(atributosPadraoProduto[j] + ": ");
-                atributosNovoProduto[j] = scanner.nextLine().toLowerCase();
+                atributosNovoProduto[j] = scanner.nextLine();
             }
 
             switch (tipoProdutoSelecionado) {
@@ -184,12 +184,12 @@ public class Main {
                 """);
 
         while(true){
-            System.out.print("\nDigite o índice do produto na lista para verificar suas informações específicas ou digite I para voltar ao início.\n>> ");
+            System.out.print("\nDigite o índice do produto na lista para verificar suas informações específicas ou não digite nada para voltar ao início.\n>> ");
             String opcaoInformacoes = scanner.nextLine();
             try {
-                listaDeEstoques.get(Integer.parseInt(opcaoInformacoes)).getProduto().exibirInformacoes();
+                listaDeEstoques.get(Integer.parseInt(opcaoInformacoes) - 1).getProduto().exibirInformacoes();
             } catch (NumberFormatException e){
-                if (!opcaoInformacoes.equalsIgnoreCase("I")){
+                if (!opcaoInformacoes.isEmpty()){
                     System.out.println("Esta opção não é válida. Tente novamente.");
                 } else {
                     break;
@@ -207,9 +207,9 @@ public class Main {
                 ║      quantidade de produtos.                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        listaTiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade());
-            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto() + " | Quantidade: " + estoque.getQuantidade()).length(); i++) {
+        listaDeEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaDeEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto().getNome() + " | Quantidade: " + estoque.getQuantidade());
+            for (int i = 0; i < 69 - ("║  " + listaDeEstoques.indexOf(estoque) + "  ║  " + estoque.getProduto().getNome() + " | Quantidade: " + estoque.getQuantidade()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -227,15 +227,15 @@ public class Main {
             System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
             int indice = scanner.nextInt() - 1;
             scanner.nextLine();
-            System.out.print("Nova quantidade de " + listaTiposDeProdutos.get(indice).getProduto() + " no estoque: ");
-            listaTiposDeProdutos.get(indice).setQuantidade(scanner.nextInt());
+            System.out.print("Nova quantidade de " + listaDeEstoques.get(indice).getProduto().getNome() + " no estoque: ");
+            listaDeEstoques.get(indice).setQuantidade(scanner.nextInt());
             scanner.nextLine();
         }
 
         System.out.println("\nEstoques alterados!");
     }
 
-    /*
+
     public static void removerEstoques() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
@@ -244,9 +244,9 @@ public class Main {
                 ║         Selecione um ou mais estoques para serem removidos.        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        listaTiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
-            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
+        listaDeEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaDeEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto().getNome());
+            for (int i = 0; i < 69 - ("║  " + listaDeEstoques.indexOf(estoque) + "  ║  " + estoque.getProduto().getNome()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -263,29 +263,28 @@ public class Main {
 
         for (int i = 0; i < qtdEstoquesSelecionados; i++) {
             System.out.print("\n(" + (i + 1) + ")\nÍndice do estoque na lista: ");
-            listaTiposDeProdutos.get(scanner.nextInt() - 1).setProduto(null);
+            listaDeEstoques.get(scanner.nextInt() - 1).setProduto(null);
             scanner.nextLine();
         }
 
-        // Intenção: usar o laço 'for-each' para remover cada elemento dada uma condição
-        // Recomendação do IntelliJ: usar 'removeIf' em vez do laço 'for-each'
-        listaTiposDeProdutos.removeIf(estoque -> estoque.getProduto() == null);
+        listaDeEstoques.removeIf(estoque -> estoque.getProduto() == null);
 
         System.out.println("Estoques removidos!");
     }
+
 
     public static void buscarEstoque() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                         BUSCAR UM ESTOQUE                          ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║         Selecione o nome do produto de um estoque para             ║
-                ║         buscar suas informações.                                   ║
+                ║         Selecione o nome do produto de um estoque ou seu           ║
+                ║         índice para buscar suas informações.                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
-        listaTiposDeProdutos.forEach(estoque -> {
-            System.out.print("║  " + (listaTiposDeProdutos.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto());
-            for (int i = 0; i < 69 - ("║  " + listaTiposDeProdutos.indexOf(estoque) + "  ║  " + estoque.getProduto()).length(); i++) {
+        listaDeEstoques.forEach(estoque -> {
+            System.out.print("║  " + (listaDeEstoques.indexOf(estoque) + 1) + "  ║  " + estoque.getProduto().getNome());
+            for (int i = 0; i < 69 - ("║  " + listaDeEstoques.indexOf(estoque) + "  ║  " + estoque.getProduto().getNome()).length(); i++) {
                 System.out.print(" ");
             }
             System.out.println("║");
@@ -296,8 +295,16 @@ public class Main {
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        String produtoEscolhido = scanner.nextLine().toLowerCase();
-        listaTiposDeProdutos.stream().filter(estoque -> estoque.getProduto().equals(produtoEscolhido)).forEach(System.out::println);
+        System.out.print(">> ");
+        String produtoEscolhido = scanner.nextLine();
+
+        // Usar try catch para testar o tipo de entrada (int ou String)
+        try {
+            listaDeEstoques.get(Integer.parseInt(produtoEscolhido) - 1).getProduto().exibirInformacoes();
+        } catch (NumberFormatException e){
+            listaDeEstoques.stream().filter(estoque -> estoque.getProduto().getNome().equalsIgnoreCase(produtoEscolhido)).forEach(Estoque::exibirInformacoes);
+        }
+
     }
 
     public static void encerrePrograma() {
@@ -309,14 +316,5 @@ public class Main {
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
         sair = true;
-    }*/
-        
-        
-        /*Alimento alimento00 = new Alimento("salgadinho", 10, "Doritos", "14/12/2025");
-        alimento00.exibirInformacoes();
-        System.out.println("_________________________________________________");
-
-        Eletronico eletronico00 = new Eletronico("ventilador", 300, "Mondeal", 110, 2);
-        eletronico00.exibirInformacoes();
-        System.out.println("_________________________________________________");*/
+    }
 }
