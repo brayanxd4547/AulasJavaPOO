@@ -1,4 +1,4 @@
-package com.senai.aula05_polimorfismo.exemplos.animal;
+package com.senai.aula05_polimorfismo.exemplos.sobrescrita.animal;
 
 public class Main {
     public static void main(String[] args) {
