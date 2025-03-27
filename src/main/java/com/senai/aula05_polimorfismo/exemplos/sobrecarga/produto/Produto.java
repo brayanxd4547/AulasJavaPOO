@@ -1,6 +1,4 @@
-package com.senai.aula05_polimorfismo.exemplos.produto;
-
-import javax.swing.*;
+package com.senai.aula05_polimorfismo.exemplos.sobrecarga.produto;
 
 public class Produto {
     String nome;

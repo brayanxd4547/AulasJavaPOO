@@ -1,4 +1,4 @@
-package com.senai.aula05_polimorfismo.exemplos.produto;
+package com.senai.aula05_polimorfismo.exemplos.sobrecarga.produto;
 
 public class Main {
     public static void main(String[] args) {
