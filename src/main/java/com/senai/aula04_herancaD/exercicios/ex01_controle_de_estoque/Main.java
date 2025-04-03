@@ -133,26 +133,36 @@ public class Main {
                 System.out.print(atributosPadraoProduto[j] + ": ");
                 atributosNovoProduto[j] = scanner.nextLine();
             }
+            System.out.print("Quantidade do produto nesse estoque: ");
+            int qtdProduto = scanner.nextInt();
 
             switch (tipoProdutoSelecionado) {
                 case 0:
                     System.out.print("Data de validade: ");
                     String dataValidade = scanner.nextLine();
 
-                    System.out.print("Quantidade do produto nesse estoque: ");
-
-                    listaDeEstoques.add(new Estoque(new Alimento(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], dataValidade), scanner.nextInt()));
+                    listaDeEstoques.add(new Estoque(new Alimento(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], dataValidade), qtdProduto));
                     break;
                 case 1:
+                    System.out.print("Cor do brinquedo: ");
+                    String corBrinquedo = scanner.nextLine();
+
+                    listaDeEstoques.add(new Estoque(new Brinquedo(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], corBrinquedo), qtdProduto));
+                    break;
+                case 3:
                     System.out.print("Tensão elétrica: ");
                     float tensaoEletrica = scanner.nextFloat();
 
                     System.out.print("Corrente elétrica: ");
                     float correnteEletrica = scanner.nextFloat();
 
-                    System.out.print("Quantidade do produto nesse estoque: ");
+                    listaDeEstoques.add(new Estoque(new Eletronico(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], tensaoEletrica, correnteEletrica), qtdProduto));
+                    break;
+                case 4:
+                    System.out.print("Cor do roupa: ");
+                    String corRoupa = scanner.nextLine();
 
-                    listaDeEstoques.add(new Estoque(new Eletronico(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], tensaoEletrica, correnteEletrica), scanner.nextInt()));
+                    listaDeEstoques.add(new Estoque(new Roupa(atributosNovoProduto[0], Float.parseFloat(atributosNovoProduto[1]), atributosNovoProduto[2], corRoupa), qtdProduto));
                     break;
             }
             scanner.nextLine();

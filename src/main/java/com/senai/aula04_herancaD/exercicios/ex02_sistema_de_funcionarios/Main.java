@@ -13,7 +13,7 @@ public class Main {
     static ArrayList<String> listaCargosDeFuncionarios = new ArrayList<>(Arrays.asList("Coordenador", "Professor"));
     static ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
 
-    static public String[] atributosPadraoProduto = {"Nome", "Salário"};
+    static public String[] atributosPadraoFuncionario = {"Nome", "Salário"};
     static int qtdFuncionariosSelecionados;
 
     public static void main(String[] args) {
@@ -107,10 +107,10 @@ TODO: Terminar outras funções
                 """);
 
         System.out.print(">> ");
-        int cargoProdutoSelecionado = scanner.nextInt() - 1;
-        while (cargoProdutoSelecionado >= listaCargosDeFuncionarios.size() || cargoProdutoSelecionado < 0) {
+        int cargoSelecionado = scanner.nextInt() - 1;
+        while (cargoSelecionado >= listaCargosDeFuncionarios.size() || cargoSelecionado < 0) {
             System.out.println("Cargo selecionado inválido. Tente novamente.");
-            cargoProdutoSelecionado = scanner.nextInt() - 1;
+            cargoSelecionado = scanner.nextInt() - 1;
         }
 
         System.out.println("""
@@ -128,6 +128,43 @@ TODO: Terminar outras funções
         System.out.print("Quantidade de novos funcionários: ");
         qtdFuncionariosSelecionados = scanner.nextInt();
         scanner.nextLine();
+        for (int i = 0; i < qtdFuncionariosSelecionados; i++) {
+            System.out.println("\nDigite as seguintes informações sobre o funcionário.");
+            String[] atributosNovoFuncionario = new String[3];
+            for (int j = 0; j < atributosPadraoFuncionario.length; j++) {
+                System.out.print(atributosPadraoFuncionario[j] + ": ");
+                atributosNovoFuncionario[j] = scanner.nextLine();
+            }
+
+            switch (cargoSelecionado) {
+                case 0:
+                    System.out.print("Equipe de professores - indique a quantidade de professores: ");
+                    int qtdProfessores = scanner.nextInt();
+                    scanner.nextLine();
+
+                    ArrayList<String> equipeProfessores = new ArrayList<>();
+                    for (int j = 0; j < qtdProfessores; j++) {
+                        System.out.print("Insira o nome do professor (" + (j + 1) + "): ");
+                        equipeProfessores.add(scanner.nextLine());
+                    }
+
+                    listaDeFuncionarios.add(new Coordenador(
+                            atributosNovoFuncionario[0],
+                            Float.parseFloat(atributosNovoFuncionario[1]),
+                            new ArrayList<>(Arrays.asList(listaDeFuncionarios.stream().filter(f -> equipeProfessores.contains(f.getNome()) && f.getCargo().equalsIgnoreCase("Professor")).toArray())))
+                    );
+                    break;
+                case 1:
+                    System.out.print("Disciplina do professor: ");
+                    String disciplina = scanner.nextLine();
+
+                    listaDeFuncionarios.add(new Professor(atributosNovoFuncionario[0], Float.parseFloat(atributosNovoFuncionario[1]), disciplina));
+                    break;
+            }
+            scanner.nextLine();
+        }
+
+        System.out.println("\nFuncionários adicionados!");
     }
 
     public static void listarEstoques() {
