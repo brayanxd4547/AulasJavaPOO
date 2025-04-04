@@ -2,6 +2,7 @@ package com.senai.aula04_herancaD.exercicios.ex02_sistema_de_funcionarios;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class Main {
@@ -151,8 +152,9 @@ TODO: Terminar outras funções
                     listaDeFuncionarios.add(new Coordenador(
                             atributosNovoFuncionario[0],
                             Float.parseFloat(atributosNovoFuncionario[1]),
-                            new ArrayList<>(Arrays.asList(listaDeFuncionarios.stream().filter(f -> equipeProfessores.contains(f.getNome()) && f.getCargo().equalsIgnoreCase("Professor")).toArray())))
-                    );
+                            new ArrayList<>()
+                            //new ArrayList<Professor>(Arrays.asList(listaDeFuncionarios.stream().filter(f -> equipeProfessores.contains(f.getNome()) && f.getCargo().equalsIgnoreCase("Professor")).toArray())))
+                    ));
                     break;
                 case 1:
                     System.out.print("Disciplina do professor: ");
