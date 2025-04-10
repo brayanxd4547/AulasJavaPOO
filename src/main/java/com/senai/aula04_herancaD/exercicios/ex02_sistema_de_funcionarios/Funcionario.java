@@ -33,7 +33,7 @@ public class Funcionario {
     public void exibirInformacoes() {
         System.out.printf("""
                  | Nome do funcionário: %s
-                 | Salário: %,.2f
+                 | Salário: R$%,.2f
                  | Cargo: %s
                 """, nome, salario, getCargo());
     }

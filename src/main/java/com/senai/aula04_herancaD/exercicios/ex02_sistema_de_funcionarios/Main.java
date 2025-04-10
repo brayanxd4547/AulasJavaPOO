@@ -1,9 +1,6 @@
 package com.senai.aula04_herancaD.exercicios.ex02_sistema_de_funcionarios;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
@@ -11,20 +8,18 @@ public class Main {
     static int opcao;
     static boolean sair = false;
 
-    static ArrayList<String> listaCargosDeFuncionarios = new ArrayList<>(Arrays.asList("Coordenador", "Professor"));
-    static ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
+    static List<String> listaCargosDeFuncionarios = new ArrayList<>(Arrays.asList("Coordenador", "Professor"));
+    static List<Funcionario> listaDeFuncionarios = new ArrayList<>(Arrays.asList(
+            new Professor("Alisson", 3000, "Física"),
+            new Professor("Bruno", 3400, "Redação"),
+            new Professor("Cássio", 3400, "Gramática"),
+            new Professor("Douglas", 3400, "Literatura")
+    ));
 
     static public String[] atributosPadraoFuncionario = {"Nome", "Salário"};
     static int qtdFuncionariosSelecionados;
 
     public static void main(String[] args) {
-        Professor professor0 = new Professor("Robesvaldo", 3000, "Matemática");
-        listaDeFuncionarios.add(professor0);
-        Professor professor1 = new Professor("Fernandinho", 3400, "Língua Portuguesa");
-        listaDeFuncionarios.add(professor1);
-        Coordenador coordenador1 = new Coordenador("Edinaldo", 7000, new ArrayList<>(Arrays.asList(professor0, professor1)));
-        listaDeFuncionarios.add(coordenador1);
-
         do {
             mostrarMenu();
 
@@ -36,30 +31,30 @@ public class Main {
                     break;
 
                 case 2:
-                    listarEstoques();
-                    break;/*
-TODO: Terminar outras funções
+                    listarFuncionarios();
+                    break;
+
                 case 3:
-                    atualizarQtdProdutos();
+                    atualizarInfoFuncionario();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 4:
-                    removerEstoques();
+                    removerFuncionario();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 5:
-                    buscarEstoque();
+                    buscarFuncionario();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
 
                 case 6:
                     encerrePrograma();
-                    break;*/
+                    break;
             }
         } while (!sair);
     }
@@ -143,19 +138,9 @@ TODO: Terminar outras funções
                     int qtdProfessores = scanner.nextInt();
                     scanner.nextLine();
 
-                    ArrayList<String> equipeProfessores = new ArrayList<>();
-                    for (int j = 0; j < qtdProfessores; j++) {
-                        System.out.print("Insira o nome do professor (" + (j + 1) + "): ");
-                        equipeProfessores.add(scanner.nextLine());
-                    }
-
-                    listaDeFuncionarios.add(new Coordenador(
-                            atributosNovoFuncionario[0],
-                            Float.parseFloat(atributosNovoFuncionario[1]),
-                            new ArrayList<>()
-                            //new ArrayList<Professor>(Arrays.asList(listaDeFuncionarios.stream().filter(f -> equipeProfessores.contains(f.getNome()) && f.getCargo().equalsIgnoreCase("Professor")).toArray())))
-                    ));
+                    listaDeFuncionarios.add(new Coordenador(atributosNovoFuncionario[0], Float.parseFloat(atributosNovoFuncionario[1]), escolhaProfessores(qtdProfessores)));
                     break;
+
                 case 1:
                     System.out.print("Disciplina do professor: ");
                     String disciplina = scanner.nextLine();
@@ -163,13 +148,46 @@ TODO: Terminar outras funções
                     listaDeFuncionarios.add(new Professor(atributosNovoFuncionario[0], Float.parseFloat(atributosNovoFuncionario[1]), disciplina));
                     break;
             }
-            scanner.nextLine();
-        }
 
-        System.out.println("\nFuncionários adicionados!");
+            System.out.println("\nFuncionário adicionado com sucesso!");
+        }
     }
 
-    public static void listarEstoques() {
+    public static List<Professor> escolhaProfessores(int qtdProfessores) {
+        List<Professor> equipeProfessores = new ArrayList<>();
+        for (int j = 0; j < qtdProfessores; j++) {
+            boolean funcEscolhido = false;
+            boolean funcProfessor = false;
+
+            while (!funcEscolhido || !funcProfessor) {
+                System.out.print("Insira o nome do professor (" + (j + 1) + "): ");
+                String nomeProfEscolhido = scanner.nextLine();
+
+                for (Funcionario funcionario : listaDeFuncionarios) {
+                    if (funcionario.getNome().equalsIgnoreCase(nomeProfEscolhido)) {
+                        funcEscolhido = true;
+                        if (funcionario instanceof Professor) {
+                            if (!equipeProfessores.contains(funcionario)) { // Caso a lista já contenha o elemento, ele é ignorado
+                                equipeProfessores.add((Professor) funcionario);
+                            }
+                            funcProfessor = true;
+                        }
+                        break;
+                    }
+                }
+
+                if (!funcEscolhido) {
+                    System.out.println("O funcionário solicitado não existe na lista. Tente novamente.");
+                } else if (!funcProfessor) {
+                    System.out.println("O funcionário solicitado não é um professor. Tente novamente.");
+                }
+            }
+        }
+
+        return equipeProfessores;
+    }
+
+    public static void listarFuncionarios() {
         System.out.print("""
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                   LISTAR FUNCIONÁRIOS                              ║
@@ -191,18 +209,174 @@ TODO: Terminar outras funções
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
-        while(true){
+        while (true) {
             System.out.print("\nDigite o índice do funcionário na lista para verificar suas informações específicas ou não digite nada para voltar ao início.\n>> ");
-            String opcaoInformacoes = scanner.nextLine();
+            String entradaFuncEscolhido = scanner.nextLine();
+
+            // Usar try catch para testar o tipo de entrada (int ou String)
             try {
-                listaDeFuncionarios.get(Integer.parseInt(opcaoInformacoes) - 1).exibirInformacoes();
-            } catch (NumberFormatException e){
-                if (!opcaoInformacoes.isEmpty()){
+                int indiceFuncEscolhido = Integer.parseInt(entradaFuncEscolhido) - 1;
+                if (indiceFuncEscolhido < listaDeFuncionarios.size()) {
+                    listaDeFuncionarios.get(indiceFuncEscolhido).exibirInformacoes();
+                } else {
+                    System.out.println("Esta opção não é válida. Tente novamente.");
+                }
+            } catch (NumberFormatException e) {
+                if (!entradaFuncEscolhido.isEmpty()) {
                     System.out.println("Esta opção não é válida. Tente novamente.");
                 } else {
                     break;
                 }
             }
         }
+    }
+
+    public static void atualizarInfoFuncionario() {
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                 ATUALIZAR SALÁRIO DE FUNCIONÁRIOS                  ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║      Selecione um ou mais funcionarios para atualizar os seus      ║
+                ║      salários.                                                     ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        listaDeFuncionarios.forEach(funcionario -> {
+            System.out.print("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo());
+            for (int i = 0; i < 69 - ("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo()).length(); i++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
+        });
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                © Colégio Espaço Potencial, 2025                    ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
+
+        System.out.print("Quantidade de funcionários a terem seus salários alterados: ");
+        qtdFuncionariosSelecionados = scanner.nextInt();
+        scanner.nextLine();
+        for (int i = 0; i < qtdFuncionariosSelecionados; i++) {
+            boolean opcaoInvalida = true;
+            while (opcaoInvalida) {
+                System.out.print("\n(" + (i + 1) + ")\nÍndice do funcionário na lista: ");
+                int indice = scanner.nextInt() - 1;
+                if (indice < listaDeFuncionarios.size()) {
+                    scanner.nextLine();
+                    System.out.print("Novo salário de " + listaDeFuncionarios.get(indice).getNome() + ": ");
+                    listaDeFuncionarios.get(indice).setSalario(scanner.nextDouble());
+                    scanner.nextLine();
+                    opcaoInvalida = false;
+                } else {
+                    System.out.println("Funcionário inválido. Tente novamente.");
+                }
+            }
+        }
+
+        System.out.println("\nFuncionários altualizados!");
+    }
+
+    public static void removerFuncionario() {
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                       REMOVER FUNCIONÁRIOS                         ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║       Selecione um ou mais funcionários para serem removidos.      ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        listaDeFuncionarios.forEach(funcionario -> {
+            System.out.print("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo());
+            for (int i = 0; i < 69 - ("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo()).length(); i++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
+        });
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                © Colégio Espaço Potencial, 2025                    ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
+
+        System.out.print("Quantidade de funcionários a serem removidos: ");
+        qtdFuncionariosSelecionados = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 0; i < qtdFuncionariosSelecionados; i++) {
+            boolean opcaoInvalida = true;
+            while (opcaoInvalida) {
+                System.out.print("\n(" + (i + 1) + ")\nÍndice do funcionário na lista: ");
+                int indice = scanner.nextInt();
+                scanner.nextLine();
+                if (indice < listaDeFuncionarios.size()) {
+                    listaDeFuncionarios.get(scanner.nextInt() - 1).setNome(null);
+                    opcaoInvalida = false;
+                } else {
+                    System.out.println("Funcionário inválido. Tente novamente.");
+                }
+            }
+        }
+
+        listaDeFuncionarios.removeIf(f -> f.getNome() == null);
+
+        System.out.println("Funcionários removidos!");
+    }
+
+    public static void buscarFuncionario() {
+        System.out.print("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                       BUSCAR UM FUNCIONÁRIO                        ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║     Selecione o nome do funcionário ou seu índice para buscar      ║
+                ║     suas informações.                                              ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                """);
+        listaDeFuncionarios.forEach(funcionario -> {
+            System.out.print("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo());
+            for (int i = 0; i < 69 - ("║  " + (listaDeFuncionarios.indexOf(funcionario) + 1) + "  ║  " + (funcionario.getNome()) + " | Cargo: " + funcionario.getCargo()).length(); i++) {
+                System.out.print(" ");
+            }
+            System.out.println("║");
+        });
+        System.out.println("""
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                © Colégio Espaço Potencial, 2025                    ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
+
+        System.out.print(">> ");
+
+        boolean opcaoInvalida = true;
+        while (opcaoInvalida){
+            String entradaFuncEscolhido = scanner.nextLine();
+
+            // Usar try catch para testar o tipo de entrada (int ou String)
+            try {
+                int indiceFuncEscolhido = Integer.parseInt(entradaFuncEscolhido) - 1;
+                if (indiceFuncEscolhido < listaDeFuncionarios.size()) {
+                    listaDeFuncionarios.get(indiceFuncEscolhido).exibirInformacoes();
+                    opcaoInvalida = false;
+                } else {
+                    System.out.println("Esta opção não é válida. Tente novamente.");
+                }
+            } catch (NumberFormatException e) {
+                if (!entradaFuncEscolhido.isEmpty()) {
+                    listaDeFuncionarios.stream().filter(f -> f.getNome().equalsIgnoreCase(entradaFuncEscolhido)).forEach(Funcionario::exibirInformacoes);
+                    opcaoInvalida = false;
+                } else {
+                    System.out.println("Esta opção não é válida. Tente novamente.");
+                }
+            }
+        }
+    }
+
+    public static void encerrePrograma() {
+        System.out.println("""
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                                                                    ║
+                ║                           Fim do programa.                         ║
+                ║                                                                    ║
+                ╚════════════════════════════════════════════════════════════════════╝
+                """);
+        sair = true;
     }
 }

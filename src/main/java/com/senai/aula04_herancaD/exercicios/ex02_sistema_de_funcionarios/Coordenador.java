@@ -1,20 +1,20 @@
 package com.senai.aula04_herancaD.exercicios.ex02_sistema_de_funcionarios;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Coordenador extends Funcionario {
-    private ArrayList<Professor> equipeProfessores = new ArrayList<>();
+    private List<Professor> equipeProfessores;
 
-    public Coordenador(String nome, double salario, ArrayList<Professor> equipeProfessores) {
+    public Coordenador(String nome, double salario, List<Professor> equipeProfessores) {
         super(nome, salario);
         this.equipeProfessores = equipeProfessores;
     }
 
-    public ArrayList<Professor> getEquipeProfessores() {
+    public List<Professor> getEquipeProfessores() {
         return equipeProfessores;
     }
 
-    public void setEquipeProfessores(ArrayList<Professor> equipeProfessores) {
+    public void setEquipeProfessores(List<Professor> equipeProfessores) {
         this.equipeProfessores = equipeProfessores;
     }
 
