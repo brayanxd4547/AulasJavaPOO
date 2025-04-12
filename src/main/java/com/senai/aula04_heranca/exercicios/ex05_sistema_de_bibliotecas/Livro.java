@@ -3,6 +3,7 @@ package com.senai.aula04_heranca.exercicios.ex05_sistema_de_bibliotecas;
 public class Livro {
     private String titulo;
     private String autor;
+    protected boolean digital;
 
     public Livro(String titulo, String autor) {
         this.titulo = titulo;

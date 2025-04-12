@@ -6,6 +6,7 @@ public class LivroFisico extends Livro{
     public LivroFisico(String titulo, String autor, int numPags) {
         super(titulo, autor);
         this.numPags = numPags;
+        this.digital = false;
     }
 
     public int getNumPags() {

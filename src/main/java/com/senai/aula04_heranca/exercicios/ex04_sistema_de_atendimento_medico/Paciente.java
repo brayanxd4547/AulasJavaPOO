@@ -4,6 +4,7 @@ public class Paciente {
     private String nome;
     private int idade;
     private double custoConsulta;
+    protected boolean convenio;
 
     public Paciente(String nome, int idade, double custoConsulta) {
         this.nome = nome;

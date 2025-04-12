@@ -8,7 +8,7 @@ public class SensorUmidade extends Sensor {
     @Override
     public void exibirInformacoes() {
         System.out.printf("""
-                 | Umidade: %f%%
+                 | Umidade: %.1f%%
                 """, valor);
     }
 }

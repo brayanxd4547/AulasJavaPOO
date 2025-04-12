@@ -27,7 +27,7 @@ public class Reserva {
 
     public void exibirInformacoes() {
         System.out.printf("""
-                 | Cliente da sensor: %s
+                 | Cliente da beneficio: %s
                  | Custo original: R$%,.2f
                 """, cliente, custoOriginal);
     }

@@ -6,6 +6,7 @@ public class LivroDigital extends Livro{
     public LivroDigital(String titulo, String autor, float tamanho) {
         super(titulo, autor);
         this.tamanho = tamanho;
+        this.digital = true;
     }
 
     public float getTamanho() {
@@ -20,7 +21,7 @@ public class LivroDigital extends Livro{
     public void exibirInformacoes() {
         super.exibirInformacoes();
         System.out.printf("""
-                 | Tamanho (em MB): %f
+                 | Tamanho (em MB): %.1f
                 """, tamanho);
     }
 }

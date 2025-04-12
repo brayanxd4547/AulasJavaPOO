@@ -8,7 +8,7 @@ public class SensorTemperatura extends Sensor {
     @Override
     public void exibirInformacoes() {
         System.out.printf("""
-                 | Temperatura: %f°C
+                 | Temperatura: %.1f°C
                 """, valor);
     }
 }

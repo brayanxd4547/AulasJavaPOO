@@ -39,7 +39,7 @@ public class ContaBancaria {
             System.out.printf("Foi depositado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
             return true;
         } else {
-            System.out.println("O valor a ser depositado não pode ser negativo.");
+            System.out.println("O desconto a ser depositado não pode ser negativo.");
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class ContaBancaria {
             System.out.printf("Foi sacado R$%,.2f à conta de " + this.titular + ". O novo saldo é R$%,.2f\n", valor, saldo);
             return true;
         } else {
-            System.out.println("O valor a ser sacado não pode ser negativo e deve ser menor do que o saldo.");
+            System.out.println("O desconto a ser sacado não pode ser negativo e deve ser menor do que o saldo.");
             return false;
         }
     }

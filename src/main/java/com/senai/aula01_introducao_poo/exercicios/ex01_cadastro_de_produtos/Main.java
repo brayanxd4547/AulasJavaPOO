@@ -63,9 +63,9 @@ public class Main {
                 ║  Selecione uma opção:                                              ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  1  ║   Criar novos estoques de produtos                           ║
-                ║  2  ║   Exibir informações de um sensor                           ║
-                ║  3  ║   Atualizar o estoque de um sensor                          ║
-                ║  4  ║   Calcular o valor total do estoque de um sensor            ║
+                ║  2  ║   Exibir informações de um produto                           ║
+                ║  3  ║   Atualizar o estoque de um produto                          ║
+                ║  4  ║   Calcular o desconto total do estoque de um produto            ║
                 ║  5  ║   Remover um estoque                                         ║
                 ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
@@ -83,7 +83,7 @@ public class Main {
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
                 ║     Insira a quantidade de novos estoques que deseja registrar     ║
-                ║     e os dados do estoque do sensor a ser criado.                 ║
+                ║     e os dados do estoque do produto a ser criado.                 ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                  © Lopes Supermercados, 2025                       ║
@@ -101,13 +101,13 @@ public class Main {
         for (int i = matrizProdutos.length; i < novaMatrizProdutos.length; i++) {
             String[] dadosProduto = new String[3];
 
-            System.out.print("Nome do sensor: ");
+            System.out.print("Nome do produto: ");
             dadosProduto[0] = scanner.nextLine();
 
-            System.out.print("Preço do sensor em reais: ");
+            System.out.print("Preço do produto em reais: ");
             dadosProduto[1] = scanner.nextLine();
 
-            System.out.print("Quantidade do sensor no estoque: ");
+            System.out.print("Quantidade do produto no estoque: ");
             dadosProduto[2] = scanner.nextLine();
 
             novaMatrizProdutos[i] = new Produto(dadosProduto[0], Float.parseFloat(dadosProduto[1]), Integer.parseInt(dadosProduto[2]));
@@ -125,7 +125,7 @@ public class Main {
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                EXIBIR INFORMAÇÕES DE UM PRODUTO                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║        Selecione um sensor para visualizar as informações:        ║
+                ║        Selecione um produto para visualizar as informações:        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
         for (int i = 0; i < matrizProdutos.length; i++) {
@@ -152,7 +152,7 @@ public class Main {
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                ATUALIZAR O ESTOQUE DE UM PRODUTO                   ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║          Selecione um sensor para atualizar as quantidade:        ║
+                ║          Selecione um produto para atualizar as quantidade:        ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
         for (int i = 0; i < matrizProdutos.length; i++) {
@@ -238,8 +238,8 @@ public class Main {
         matrizProdutos = novaMatrizProdutos;
 
         System.out.println("Estoque removido com sucesso!\n");
-        for (Produto sensor : matrizProdutos) {
-            System.out.println(sensor);
+        for (Produto produto : matrizProdutos) {
+            System.out.println(produto);
         }
     }
 

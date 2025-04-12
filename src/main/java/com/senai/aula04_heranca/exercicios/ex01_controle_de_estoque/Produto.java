@@ -37,7 +37,7 @@ public class Produto {
 
     public void exibirInformacoes() {
         System.out.printf("""
-                 | Nome do sensor: %s
+                 | Nome do beneficio: %s
                  | Preço: %,.2f
                  | Marca: %s
                 """, nome, preco, marca);

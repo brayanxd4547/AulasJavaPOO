@@ -10,6 +10,7 @@ public class Main {
     }
 
     public static void testarReserva(Reserva reserva){
+        System.out.println();
         reserva.exibirInformacoes();
     }
 }

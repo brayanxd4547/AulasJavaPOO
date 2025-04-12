@@ -72,7 +72,7 @@ public class Main {
                 ║  2  ║   Listar todos os estoques                                   ║
                 ║  3  ║   Atualizar quantidade de produtos em um estoque             ║
                 ║  4  ║   Remover um estoque de produtos                             ║
-                ║  5  ║   Buscar informações de um estoque pelo nome do sensor      ║
+                ║  5  ║   Buscar informações de um estoque pelo nome do produto      ║
                 ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                    © Lopes Supermercados, 2025                     ║
@@ -88,7 +88,7 @@ public class Main {
                 ║                      ADICIONAR NOVOS ESTOQUES                      ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║     Insira o tipo do sensor do estoque que deseja adicionar.      ║
+                ║     Insira o tipo do produto do estoque que deseja adicionar.      ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣""");
         listaTiposDeProdutos.forEach(tipo -> {
@@ -127,13 +127,13 @@ public class Main {
         qtdEstoquesSelecionados = scanner.nextInt();
         scanner.nextLine();
         for (int i = 0; i < qtdEstoquesSelecionados; i++) {
-            System.out.println("\nDigite as seguintes informações sobre o sensor.");
+            System.out.println("\nDigite as seguintes informações sobre o produto.");
             String[] atributosNovoProduto = new String[3];
             for (int j = 0; j < atributosPadraoProduto.length; j++) {
                 System.out.print(atributosPadraoProduto[j] + ": ");
                 atributosNovoProduto[j] = scanner.nextLine();
             }
-            System.out.print("Quantidade do sensor nesse estoque: ");
+            System.out.print("Quantidade do produto nesse estoque: ");
             int qtdProduto = scanner.nextInt();
 
             switch (tipoProdutoSelecionado) {
@@ -194,7 +194,7 @@ public class Main {
                 """);
 
         while(true){
-            System.out.print("\nDigite o índice do sensor na lista para verificar suas informações específicas ou não digite nada para voltar ao início.\n>> ");
+            System.out.print("\nDigite o índice do produto na lista para verificar suas informações específicas ou não digite nada para voltar ao início.\n>> ");
             String opcaoInformacoes = scanner.nextLine();
             try {
                 listaDeEstoques.get(Integer.parseInt(opcaoInformacoes) - 1).getProduto().exibirInformacoes();
@@ -288,7 +288,7 @@ public class Main {
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                         BUSCAR UM ESTOQUE                          ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║         Selecione o nome do sensor de um estoque ou seu           ║
+                ║         Selecione o nome do produto de um estoque ou seu           ║
                 ║         índice para buscar suas informações.                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);

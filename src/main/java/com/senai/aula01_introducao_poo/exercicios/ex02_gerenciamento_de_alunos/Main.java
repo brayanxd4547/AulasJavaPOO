@@ -15,8 +15,6 @@ public class Main {
     };
     static int alunoSelecionado;
 
-    //todo BORA TRABALHAR
-
     public static void main(String[] args) {
         do {
             mostrarMenu();
