@@ -65,7 +65,7 @@ public class Main {
                 ║  1  ║   Criar novos estoques de produtos                           ║
                 ║  2  ║   Exibir informações de um produto                           ║
                 ║  3  ║   Atualizar o estoque de um produto                          ║
-                ║  4  ║   Calcular o desconto total do estoque de um produto            ║
+                ║  4  ║   Calcular o valor total do estoque de um produto            ║
                 ║  5  ║   Remover um estoque                                         ║
                 ║  6  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
