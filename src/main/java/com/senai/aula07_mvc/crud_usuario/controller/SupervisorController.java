@@ -7,7 +7,7 @@ import com.senai.aula07_mvc.crud_usuario.model.SupervisorDAO;
 import java.util.List;
 
 public class SupervisorController {
-    private SupervisorDAO supervisorDAO = new OperadorDAO();
+    private SupervisorDAO supervisorDAO = new SupervisorDAO();
 
     public List<Supervisor> listarSupervisores() {
         return supervisorDAO.listar();

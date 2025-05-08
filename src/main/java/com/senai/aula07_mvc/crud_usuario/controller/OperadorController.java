@@ -9,7 +9,7 @@ public class OperadorController {
     private OperadorDAO operadorDAO = new OperadorDAO();
 
     public List<Operador> listarOperadores() {
-        return OperadorDAO.listar();
+        return operadorDAO.listar();
     }
 
     public boolean cadastrarOperador (Operador op){

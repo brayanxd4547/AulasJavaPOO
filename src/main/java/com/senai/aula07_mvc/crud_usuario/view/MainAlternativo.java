@@ -1,8 +1,9 @@
-/*
 package com.senai.aula07_mvc.crud_usuario.view;
 
 import com.senai.aula07_mvc.crud_usuario.controller.OperadorController;
 import com.senai.aula07_mvc.crud_usuario.controller.SupervisorController;
+import com.senai.aula07_mvc.crud_usuario.model.Operador;
+import com.senai.aula07_mvc.crud_usuario.model.Supervisor;
 import com.senai.aula07_mvc.crud_usuario.model.Usuario;
 
 import java.util.ArrayList;
@@ -18,9 +19,8 @@ public class MainAlternativo {
     static List<String> listaTiposDeUsuario = new ArrayList<>(List.of("Operador", "Supervisor"));
     static List<Usuario> listaDeUsuarios = new ArrayList<>(/*List.of(
             new Operador("Gestão de vendas - Escalario", 30),
-            new Supervisor("Expansão da malha ferroviária - ViaMobilidade", 120),
-            new UsuarioCSV("PENDÊNCIAS - Neorume ltda",  20)
-    ));
+            new Supervisor("Expansão da malha ferroviária - ViaMobilidade", 120)
+    )*/);
 
     static public String[] atributosPadraoUsuario = {"ID", "Nome"};
     static int qtdUsuariosSelecionados;
@@ -28,13 +28,13 @@ public class MainAlternativo {
     public static void main(String[] args) {
         OperadorController opController = new OperadorController();
         SupervisorController supController = new SupervisorController();
-        
+
         do {
             mostrarMenu();
 
             switch (opcao) {
                 case 1:
-                    gerarUsuarios();
+                    cadastrarUsuarios();
                     System.out.println("Digite qualquer tecla para continuar...");
                     scanner.nextLine();
                     break;
@@ -71,31 +71,33 @@ public class MainAlternativo {
     public static void mostrarMenu() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                         CONTROLE DE RELATÓRIOS                     ║
+                ║                CONTROLE DE OPERADORES E SUPERVISORES               ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║  Selecione uma opção:                                              ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║  1  ║   Gerar novos usuários                                     ║
-                ║  2  ║   Listar todos os usuários                                 ║
-                ║  3  ║   Atualizar informações de um usuario                      ║
-                ║  4  ║   Remover um usuario                                       ║
-                ║  5  ║   Buscar informações de um usuario                         ║
-                ║  6  ║   Sair                                                       ║
+                ║  1  ║   Cadastrar novo usuário                                     ║
+                ║  2  ║   Listar todos os usuários                                   ║
+                ║  3  ║   Atualizar informações de um usuário                        ║
+                ║  4  ║   Remover um usuário                                         ║
+                ║  5  ║   Buscar informações de um usuário                           ║
+                ║  6  ║   Ligar máquina                                              ║
+                ║  7  ║   Demitir operador                                           ║
+                ║  8  ║   Sair                                                       ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                        © Enterpreuner, 2025                        ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
         opcao = scanner.nextInt();
         scanner.nextLine();
     }
 
-    public static void gerarUsuarios() {
+    public static void cadastrarUsuarios() {
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                         GERAR NOVOS RELATÓRIOS                     ║
+                ║                CADASTRAR OPERADORES OU SUPERVISORES                ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║           Insira o tipo de usuario que deseja gerar.             ║
+                ║           Insira o tipo de usuário que deseja cadastrar.           ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣""");
         listaTiposDeUsuario.forEach(tipo -> {
@@ -107,7 +109,7 @@ public class MainAlternativo {
         });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -120,13 +122,13 @@ public class MainAlternativo {
 
         System.out.println("""
                 ╔════════════════════════════════════════════════════════════════════╗
-                ║                        GERAR NOVOS RELATÓRIOS                  ║
+                ║                        CADASTRAR NOVOS RELATÓRIOS                  ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 ║                                                                    ║
-                ║          Insira as seguintes informações sobre o usuario:        ║
+                ║         Insira as seguintes informações sobre os usuários.         ║
                 ║                                                                    ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -134,15 +136,23 @@ public class MainAlternativo {
         qtdUsuariosSelecionados = scanner.nextInt();
         scanner.nextLine();
         for (int i = 0; i < qtdUsuariosSelecionados; i++) {
-            System.out.println("\nDigite as seguintes informações sobre o usuario.");
+            System.out.println("\nDigite as seguintes informações sobre o usuário.");
             String[] atributosNovoUsuario = new String[atributosPadraoUsuario.length];
             for (int j = 0; j < atributosPadraoUsuario.length; j++) {
                 System.out.print(atributosPadraoUsuario[j] + ": ");
                 atributosNovoUsuario[j] = scanner.nextLine();
             }
 
-            listaDeUsuarios.add(new UsuarioJSON(atributosNovoUsuario[0], Integer.parseInt(atributosNovoUsuario[1])));
-            listaDeUsuarios.getLast().gerar();
+            switch (tipoSelecionado){
+                case 1:
+                    listaDeUsuarios.add(new Usuario(atributosNovoUsuario[0], Integer.parseInt(atributosNovoUsuario[1])));
+                    break;
+                case 2:
+                    break;
+                default:
+            }
+            listaDeUsuarios.add(new Usuario(atributosNovoUsuario[0], Integer.parseInt(atributosNovoUsuario[1])));
+            listaDeUsuarios.getLast().cadastrar();
         }
     }
 
@@ -151,7 +161,7 @@ public class MainAlternativo {
                 ╔════════════════════════════════════════════════════════════════════╗
                 ║                         LISTAR RELATÓRIOS                          ║
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                 Segue a lista de todos os usuários.              ║
+                ║                 Segue a lista de todos os usuários.                ║
                 ╠════════════════════════════════════════════════════════════════════╣
                 """);
         listaDeUsuarios.forEach(usuario -> {
@@ -163,7 +173,7 @@ public class MainAlternativo {
         });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -207,7 +217,7 @@ public class MainAlternativo {
         });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -269,7 +279,7 @@ public class MainAlternativo {
         });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -281,7 +291,8 @@ public class MainAlternativo {
             boolean opcaoInvalida = true;
             while (opcaoInvalida) {
                 System.out.print("\n(" + (i + 1) + ")\nÍndice do usuario na lista: ");
-                int indice = scanner.nextInt() - 1; scanner.nextLine();
+                int indice = scanner.nextInt() - 1;
+                scanner.nextLine();
                 if (indice < listaDeUsuarios.size()) {
                     listaDeUsuarios.get(indice).setTitulo(null);
                     opcaoInvalida = false;
@@ -314,7 +325,7 @@ public class MainAlternativo {
         });
         System.out.println("""
                 ╠════════════════════════════════════════════════════════════════════╣
-                ║                       © UltimateText, 2025                         ║
+                ║                       © Enterpreuner, 2025                         ║
                 ╚════════════════════════════════════════════════════════════════════╝
                 """);
 
@@ -355,4 +366,3 @@ public class MainAlternativo {
         sair = true;
     }
 }
-*/

@@ -8,113 +8,128 @@ import com.senai.aula07_mvc.crud_usuario.model.Supervisor;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
-        OperadorController opController = new OperadorController();
-        SupervisorController supController = new SupervisorController();
+    public static void main(String[] args) {
+        OperadorController operadorController = new OperadorController();
+        SupervisorController supervisorController = new SupervisorController();
 
         String menu = """
-                1 - Cadastrar novo usuário
-                2 - Apagar um usuário
-                3 - Atualizar um usuário
-                4 - Exibir informações de um usuário
-                5 - Ligar máquina
-                6 - Demitir operador
-                7 - Sair
+                ╔════════════════════════════════════════════════════════════════════╗
+                ║                CONTROLE DE OPERADORES E SUPERVISORES               ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║  Selecione uma opção:                                              ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║  1  ║   Cadastrar novo usuário                                     ║
+                ║  2  ║   Listar todos os usuários                                   ║
+                ║  3  ║   Atualizar informações de um usuário                        ║
+                ║  4  ║   Remover um usuário                                         ║
+                ║  5  ║   Buscar informações de um usuário                           ║
+                ║  6  ║   Ligar máquina                                              ║
+                ║  7  ║   Demitir operador                                           ║
+                ║  8  ║   Sair                                                       ║
+                ╠════════════════════════════════════════════════════════════════════╣
+                ║                        © Enterpreuner, 2025                        ║
+                ╚════════════════════════════════════════════════════════════════════╝
                 """;
 
-        int opcao = scanner.nextInt(); scanner.nextLine();
+        int opcao;
 
         do {
-            System.out.println(menu);
-            opcao = scanner.nextInt(); scanner.nextLine();
-            System.out.println("Qual tipo de usuário?");
-            System.out.println("1 - Operador");
-            System.out.println("2 - Supervisor");
-            int escolhaTipo = scanner.nextInt(); scanner.nextLine();
+            System.out.print(menu + " > ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
-                case 1:
-                    System.out.println("Preencha os dados a seguir.");
+                case 1: // Cadastro
+                    System.out.print("""
+                            \nQual tipo de usuário?
+                             | 1 - Operador
+                             | 2 - Supervisor
+                             >\s""");
+                    int escolhaTipo = scanner.nextInt();
 
-                    System.out.print("ID: ");
-                    int id = scanner.nextInt(); scanner.nextLine();
+                    System.out.println("\nPreencha os dados a seguir:");
 
-                    System.out.println("Nome: ");
+                    System.out.print("1 - ID: ");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("2 - Nome: ");
                     String nome = scanner.nextLine();
 
                     if (escolhaTipo == 1) {
-                        System.out.println("Setor: ");
+                        System.out.print("3 - Setor: ");
                         String setor = scanner.nextLine();
-                        Operador operador = new Operador(nome, id, setor);
-                        if (opController.cadastrarOperador(operador)) {
-                            System.out.println("Cadstrado com sucesso!");
-                        }
-                         else {
-                            System.out.println("Não foi possível cadastrar o usuário.");
+                        Operador operadorerador = new Operador(nome, id, setor);
+                        if (operadorController.cadastrarOperador(operadorerador)) {
+                            System.out.println("\nCadstrado com sucesso!");
+                        } else {
+                            System.out.println("\nNão foi possível cadastrar o usuário.");
                         }
                     } else if (escolhaTipo == 2) {
-                        System.out.println("Área: ");
+                        System.out.print("3 - Área: ");
                         String area = scanner.nextLine();
-                        Supervisor supervisor = new Supervisor(nome, id, area);
-                        if (supController.cadastrarSupervisor(supervisor)) {
-                            System.out.println("Cadstrado com sucesso!");
+                        Supervisor supervisorervisor = new Supervisor(nome, id, area);
+                        if (supervisorController.cadastrarSupervisor(supervisorervisor)) {
+                            System.out.println("\nCadstrado com sucesso!");
                         } else {
-                            System.out.println("Não foi possível cadastrar o usuário.");
+                            System.out.println("\nNão foi possível cadastrar o usuário.");
                         }
                     }
                     break;
 
-                case 2:
+                case 2: // Listar
                     if (escolhaTipo == 1)
-                        opController.listarOperadores().forEach(System.out::println);
+                        operadorController.listarOperadores().forEach(System.out::println);
                     else if (escolhaTipo == 2)
-                        supController.listarSupervisores().forEach(System.out::println);
-
-                    System.out.println("Escolha um usuário pelo ID para apagar: ");
-                    id = scanner.nextInt(); scanner.nextLine();
-
-                    if (escolhaTipo == 1)
-                        opController.deletarOperador(id);
-                    else if (escolhaTipo == 2)
-                        supController.deletarOperador(id);
-
+                        supervisorController.listarSupervisores().forEach(System.out::println);
                     break;
 
-                case 3:
+                case 3: // Atualizar
                     if (escolhaTipo == 1)
-                        opController.listarOperadores().forEach(System.out::println);
+                        operadorController.listarOperadores().forEach(System.out::println);
                     else if (escolhaTipo == 2)
-                        supController.listarSupervisores().forEach(System.out::println);
+                        supervisorController.listarSupervisores().forEach(System.out::println);
 
                     System.out.println("Escolha um usuário pelo ID para atualizar: ");
-                    id = scanner.nextInt(); scanner.nextLine();
+                    id = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.println("Atualize as seguintes informações: ");
 
-                    System.out.println("Nome: ");
+                    System.out.print("Nome: ");
                     nome = scanner.nextLine();
 
                     if (escolhaTipo == 1) {
-                        System.out.println("Setor: ");
+                        System.out.print("Setor: ");
                         String setor = scanner.nextLine();
-                        Operador operador = new Operador(nome, id, setor);
-                        opController.atualizarOperador(operador);
+                        Operador operadorerador = new Operador(nome, id, setor);
+                        operadorController.atualizarOperador(operadorerador);
                     } else if (escolhaTipo == 2) {
-                        System.out.println("Área: ");
+                        System.out.print("Área: ");
                         String area = scanner.nextLine();
-                        Supervisor supervisor = new Supervisor(nome, id, area);
-                        supController.atualizarSupervisor(supervisor);
+                        Supervisor supervisorervisor = new Supervisor(nome, id, area);
+                        supervisorController.atualizarSupervisor(supervisorervisor);
                     }
 
                     System.out.println("Usuário atualizado com sucesso.");
                     break;
 
-                case 4:
+                case 4: // Remover
                     if (escolhaTipo == 1)
-                        opController.listarOperadores().forEach(System.out::println);
+                        operadorController.listarOperadores().forEach(System.out::println);
                     else if (escolhaTipo == 2)
-                        supController.listarSupervisores().forEach(System.out::println);
+                        supervisorController.listarSupervisores().forEach(System.out::println);
+
+                    System.out.println("Escolha um usuário pelo ID para apagar: ");
+                    id = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (escolhaTipo == 1)
+                        operadorController.deletarOperador(id);
+                    else if (escolhaTipo == 2)
+                        supervisorController.deletarOperador(id);
+
                     break;
 
                 case 5:
